@@ -1,75 +1,150 @@
 body {
-    background-color: #2e3845;
-    margin: 0;
-    font-family: "Rubik", sans-serif;
-    color: white;
+  background-color: #2e3845;
+  margin: 0;
+  font-family: "Rubik", sans-serif;
+  color: white;
+}
+.container {
+  padding: 40px;
+  margin: 0 auto;
+}
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 54px;
+}
+.card {
+  list-style: none;
+  background-color: #f4f4f4;
+  color: #222;
+  text-align: center;
+  border-radius: 20px;
+  max-width: 20rem;
+  position: relative;
+  height: 30rem;
+}
+.card-id {
+  font-size: 5rem;
+  font-style: italic;
+  margin-right: 1rem;
+  color: white;
+  opacity: 0.5;
+}
+.card-id-container {
+  background-color: rgb(120,200,80);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 10rem;
+  display: flex;
+  justify-content: flex-end;
+}
+/*Defino los colores de los tipos para que se aplique segun el primer tipo de cada pokemon*/
+.type-steel {
+  background-color: rgb(168,168,192);
+}
+.type-water {
+  background-color: rgb(56,153,248);
+}
+.type-bug {
+  background-color: rgb(168,184,32);
+}
+.type-dragon {
+  background-color: rgb(160,80,56);
+}
+.type-electric {
+  background-color: rgb(248,208,48);
+}
+.type-ghost {
+  background-color: rgb(96,96,176);
+}
+.type-fire {
+  background-color: rgb(240,80,48);
+}
+.type-fairy {
+  background-color: rgb(231,159,231);
+}
+.type-ice {
+  background-color: rgb(88,200,224);
+}
+.type-fighting {
+  background-color: rgb(160,80,56);
+}
+.type-normal {
+  background-color: rgb(168,160,144);
+}
+.type-grass {
+  background-color: rgb(120,200,80);
+}
+.type-psychic {
+  background-color: rgb(248,112,160);
+}
+.type-rock {
+  background-color: rgb(184,160,88);
+}
+.type-dark {
+  background-color: rgb(122,88,72);
+}
+.type-ground {
+  background-color: rgb(234,214,164);
+}
+.type-poison {
+  background-color: rgb(176,88,160);
+}
+.type-flying {
+  background-color: rgb(152,168,240);
+}
+.card-title {
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+/*Cambiando para los tipos*/
+.card-type-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3rem;
+}
+/*Burbujas de tipos*/
+.card-type {
+  font-weight: lighter;
+  color: white;
+  margin-top: 5px;
+  background-color: #222;
+  width: 4rem;
+  padding: 0.25em 0.5em;
+  border-radius: 2em;
+  border: none;
+}
+.card-image {
+  height: 180px;
+  position: absolute;
+  margin-left:auto;
+  margin-right:auto;
+  left:0;
+  right:0;
+}
+#pokedex {
+  padding-inline-start: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 20px;
+}
+.card:hover {
+  animation: bounce 0.5s linear;
+}
+@keyframes bounce {
+  20% {
+    transform: translateY(-6px);
   }
-  .container {
-    padding: 40px;
-    margin: 0 auto;
+  40% {
+    transform: translateY(0px);
   }
-  h1 {
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 54px;
+  60% {
+    transform: translateY(-2px);
   }
-  .card {
-    list-style: none;
-    background-color: #f4f4f4;
-    color: #222;
-    text-align: center;
-    border-radius: 20px;
-    max-width: 20rem;
-    position: relative;
+  80% {
+    transform: translateY(-0px);
   }
-  .card-id {
-    /* Hacerlo traslucido y grande a la derecha*/
-  }
-  .card-id-container {
-    background-color: #78C850;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    height: 10rem;
-  }
-  .card-title {
-    text-transform: uppercase;
-    font-size: 32px;
-    font-weight: normal;
-    margin-bottom: 0;
-  }
-  .card-subtitle {
-    font-weight: lighter;
-    color: #666;
-    margin-top: 5px;
-  }
-  .card-image {
-    height: 180px;
-    position: absolute;
-    margin-left:auto;
-    margin-right:auto;
-    left:0;
-    right:0;
-  }
-  #pokedex {
-    padding-inline-start: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-gap: 20px;
-  }
-  .card:hover {
-    animation: bounce 0.5s linear;
-  }
-  @keyframes bounce {
-    20% {
-      transform: translateY(-6px);
-    }
-    40% {
-      transform: translateY(0px);
-    }
-    60% {
-      transform: translateY(-2px);
-    }
-    80% {
-      transform: translateY(-0px);
-    }
-  }
+}
