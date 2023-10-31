@@ -31,12 +31,14 @@ h1 {
   opacity: 0.5;
 }
 .card-id-container {
-  background-color: rgb(120,200,80);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   height: 10rem;
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  padding-top: 1rem;
+  background-color: rgb(120,200,80);
 }
 /*Defino los colores de los tipos para que se aplique segun el primer tipo de cada pokemon*/
 .type-steel {
@@ -98,20 +100,18 @@ h1 {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 0;
+  margin-top: 3rem;
 }
-/*Cambiando para los tipos*/
 .card-type-row {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 3rem;
 }
-/*Burbujas de tipos*/
 .card-type {
   font-weight: lighter;
   color: white;
   margin-top: 5px;
-  background-color: #222;
   width: 4rem;
   padding: 0.25em 0.5em;
   border-radius: 2em;
@@ -124,7 +124,27 @@ h1 {
   margin-right:auto;
   left:0;
   right:0;
+  top: 2rem;
 }
+/*Para incluir*/
+.stats-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 6rem;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  width: 14%;
+  font-size: 1rem;
+}
+
+.stat-name {
+  font-weight: bold;
+}
+
 #pokedex {
   padding-inline-start: 0;
   display: grid;
