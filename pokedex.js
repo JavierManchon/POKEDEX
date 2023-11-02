@@ -52,7 +52,7 @@ async function getData(url) {
             };
         });
         
-        renderPokemon(pokemon);
+        return pokemon;
 
     } catch(error) {
         console.error("No se pudo obtener los datos de los pokemon", error);
@@ -140,8 +140,8 @@ function renderPokemon(pokemonData) {
 //Llamo a la funcion getData() como se le pasa una promesa uso el then/catch para ejecutarla en 
 //caso de que la recopilacion de los datos sea correcto.
 getData(apiUrl)
-  .then((pokemonData) => {
-    renderPokemon(pokemonData);
+  .then((pokemon) => {
+    renderPokemon(pokemon);
   })
   .catch((error) => {
     console.error("Error al obtener los datos de los Pokémon", error);
@@ -151,3 +151,5 @@ getData(apiUrl)
 /*Error al obtener los datos de los Pokémon TypeError: Cannot read properties of undefined (reading 'length')
     at renderPokemon (pokedex.js:66:37)
     at pokedex.js:144:5*/
+    //FIXED: La funcion renderPokemon del final estaba ejecutando el parametro de la funcion
+    //No el elemento mapeado "pokemon" que se genera dentro de getData.
