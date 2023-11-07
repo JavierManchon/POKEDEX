@@ -1,10 +1,8 @@
-let ol$$ = document.body.querySelector("ol");
-const apiUrl = "https://pokeapi.co/api/v2/pokemon/"
-//Número de pokemon manual para poder hacer prubas con poca velocidad de internet
-const pokeNum = 151;
+//Defino los recursos con los que empiezo
+const board$$ = document.querySelector("#pokedex");
+const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
 
-//Colores segun el tipo principal del pokemon como recurso, para las burbujas y los containers del id
-//Añado la combinacion de rgb a modo de array, por si tuviera que utilizarlo en estilos inline
+//Colores y tipos para los background
 const colorType = {
     steel: [168,168,192],
     water: [56,153,248],
@@ -26,46 +24,52 @@ const colorType = {
     flying: [152,168,240]
 }
 
+//Nombres de las stats
 const statNames = ["HP", "ATK", "DEF", "S.ATK", "S.DEF", "SPD"];
 
-//Defino una funcion asincrona que haga la solicitud a la API que devuelva en formato 
-//json la info del numero de poke que quiera extraer mediante un bucle for como dice el ejercicio
-async function getData(url) {
-    //Añado try/catch para el control de errores
+//Defino el numero de pokemon que saco de la api
+const pokeNum = 151;
+
+//Funcion que mapea la info dentro de cada pokemon
+const mapData = (unmappedData) => {
+    let pokemon = unmappedData.map((elem) => {
+        return {
+        name: elem.name,
+        image: elem.sprites.other.home["front_default"],
+        type: elem.types.map((type) => type.type.name),
+        id: elem.id,
+        baseStat: elem.stats.map((stat) => stat.base_stat),
+        };
+    });
+
+    return pokemon;
+}
+
+//Definimos la funcion de fetch
+const getData = async (url) => {
     try {
-        let results = [];
-        for (let i = 1; i < (pokeNum + 1); i++) {
+        let pokemonData = [];
+        for (let i = 1; i < pokeNum; i++) {
             let response = await fetch(url + i);
             let data = await response.json();
-            results.push(data);
+            pokemonData.push(data);
         }
-        
-        //En base al array generado mapeo los resultados para obtener los datos que necesito
-        const pokemon = results.map((result) => {
-            return {
-            name: result.name,
-            image: result.sprites.other.home["front_default"],
-            type: result.types.map((type) => type.type.name),
-            id: result.id,
-            //Mapeo las stats para incluirlas
-            baseStat: result.stats.map((stat) => stat.base_stat),
-            };
-        });
-        
-        return pokemon;
 
-    } catch(error) {
-        console.error("No se pudo obtener los datos de los pokemon", error);
+        let pokemonMapped = mapData(pokemonData);
+
+        return pokemonMapped;
+
+    } catch (error) {
+        console.error("Ha habido un error en la descarga de pokemon", error);
     }
 }
 
-//Corrijo el ejercicio para ajustarme a lo que se pide
-//Creo la funcion renderPokemon() la cual es la que pinta cada una de las tarjetas de los pokemon
-//y crea los elementos necesarios
-function renderPokemon(pokemonData) {
-    for (let i = 0; i < pokemonData.length; i++) {
-        let li$$ = document.createElement("li");
-        li$$.className = "card";
+
+//Funcion que va a pintar cada carta impresa en la pagina
+const renderPokemon = (mappedData) => {
+    for (let i = 0; i < mappedData.length; i++) {
+        let card$$ = document.createElement("div");
+        card$$.className = "card";
         let h2$$ = document.createElement("h2");
         h2$$.className = "card-title";
         let img$$ = document.createElement("img");
@@ -83,38 +87,38 @@ function renderPokemon(pokemonData) {
         let statsContainer$$ = document.createElement("div");
         statsContainer$$.className = "stats-area";
 
-        li$$.appendChild(cardContainer$$);
+        card$$.appendChild(cardContainer$$);
         cardContainer$$.appendChild(h3$$);
         //Añado el condicional para que imprima los id en un formato homogeneo
-        if (pokemonData[i].id < 10) {
-            h3$$.textContent = `#00${pokemonData[i].id}`;
-        } else if (pokemonData[i].id < 100) {
-            h3$$.textContent = `#0${pokemonData[i].id}`;
+        if (mappedData[i].id < 10) {
+            h3$$.textContent = `#00${mappedData[i].id}`;
+        } else if (mappedData[i].id < 100) {
+            h3$$.textContent = `#0${mappedData[i].id}`;
         } else {
-            h3$$.textContent = `#${pokemonData[i].id}`;
+            h3$$.textContent = `#${mappedData[i].id}`;
         }
         cardContainer$$.appendChild(img$$);
         //Compruebo el primer tipo del pokemon con el objeto que contiene los tipos
         //Cuando encuentre una coincidencia le aplica la clase que contiene el color al background
         for (let key in colorType) {
-            if (key === pokemonData[i].type[0]) {
+            if (key === mappedData[i].type[0]) {
                 cardContainer$$.classList.add(`type-${key}`);
             }
         }
-        img$$.setAttribute("src", pokemonData[i].image);
-        img$$.setAttribute("alt", `Imagen de ${pokemonData[i].name}`);
-        li$$.appendChild(h2$$);
-        h2$$.textContent = pokemonData[i].name;
+        img$$.setAttribute("src", mappedData[i].image);
+        img$$.setAttribute("alt", `Imagen de ${mappedData[i].name}`);
+        card$$.appendChild(h2$$);
+        h2$$.textContent = mappedData[i].name;
         types$$.appendChild(p1$$);
         //Defino el fondo de cada burbuja de tipo, y si hay dos tipos, lo añado tambien
-        p1$$.textContent = pokemonData[i].type[0];
-        p1$$.classList.add(`type-${pokemonData[i].type[0]}`);
-        if (pokemonData[i].type[1]) {
+        p1$$.textContent = mappedData[i].type[0];
+        p1$$.classList.add(`type-${mappedData[i].type[0]}`);
+        if (mappedData[i].type[1]) {
             types$$.appendChild(p2$$);
-            p2$$.textContent = pokemonData[i].type[1];
-            p2$$.classList.add(`type-${pokemonData[i].type[1]}`); 
+            p2$$.textContent = mappedData[i].type[1];
+            p2$$.classList.add(`type-${mappedData[i].type[1]}`); 
         }
-        li$$.appendChild(types$$);
+        card$$.appendChild(types$$);
 
         //Incorporo las stats
         for (let j = 0; j < 6; j++) {
@@ -125,31 +129,28 @@ function renderPokemon(pokemonData) {
             statName$$.textContent = statNames[j];
             let statValue$$ = document.createElement("span");
             statValue$$.className = "stat-value";
-            statValue$$.textContent = pokemonData[i].baseStat[j];
+            statValue$$.textContent = mappedData[i].baseStat[j];
             stat$$.appendChild(statName$$);
             stat$$.appendChild(statValue$$);
             statsContainer$$.appendChild(stat$$);
         }
-        li$$.appendChild(statsContainer$$);
+        card$$.appendChild(statsContainer$$);
 
-        ol$$.appendChild(li$$);
+        board$$.appendChild(card$$);
     }
 }
 
+//Funcion que va a ejecutar la pagina
+const initFuction = async () => {
 
-//Llamo a la funcion getData() como se le pasa una promesa uso el then/catch para ejecutarla en 
-//caso de que la recopilacion de los datos sea correcto.
-getData(apiUrl)
-  .then((pokemon) => {
-    renderPokemon(pokemon);
-  })
-  .catch((error) => {
-    console.error("Error al obtener los datos de los Pokémon", error);
-});
+    let pokemonData = await getData(apiUrl);
 
-//Por qué me sale el problema?:
-/*Error al obtener los datos de los Pokémon TypeError: Cannot read properties of undefined (reading 'length')
-    at renderPokemon (pokedex.js:66:37)
-    at pokedex.js:144:5*/
-    //FIXED: La funcion renderPokemon del final estaba ejecutando el parametro de la funcion
-    //No el elemento mapeado "pokemon" que se genera dentro de getData.
+    //Reseteador para el control de carga
+    board$$.innerHTML = "";
+
+    let renderedPokemon = renderPokemon(pokemonData);
+    
+    return renderedPokemon;
+}
+
+initFuction();
