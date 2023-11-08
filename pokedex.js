@@ -136,6 +136,7 @@ const renderPokemon = (mappedData) => {
             statsContainer$$.appendChild(stat$$);
         }
         card$$.appendChild(statsContainer$$);
+        card$$.classList.add("transUp");
 
         board$$.appendChild(card$$);
     }
@@ -174,16 +175,21 @@ browser$$.addEventListener("input", showSelection)
 
 //Funcion para el filtro IN PROGRESS
 function filterByType() {
-    let pokemonCards = document.querySelectorAll("p");
-    for (let pokemon of pokemonCards) {
-        pokemon.parentNode.parentNode.classList.remove("hidden");
-        if (!pokemon.textContent.includes(this.innerHTML)) {
-            pokemon.parentNode.parentNode.classList.add("hidden");
+    let typeRows = document.querySelectorAll(".card-type-row");
+    for (let pokemon of typeRows) {
+        pokemon.parentNode.classList.remove("hidden");
+        let typeFilter = pokemon.children;
+        if ((typeFilter.length === 1 && typeFilter[0].innerHTML !== this.innerHTML) || (typeFilter.length === 2 && (typeFilter[0].innerHTML !== this.innerHTML && typeFilter[1].innerHTML !== this.innerHTML))) {
+            pokemon.parentNode.classList.add("hidden");
+        }
+        if (this.innerHTML === "all") {
+            pokemon.parentNode.classList.remove("hidden");
         }
     }
 }
 //Imprime solo los pokemon que tienen tipo unico o que el segundo tipo coincide
 //Buscar una forma de si el primero de los dos coincide tambien lo imprima
+//(!pokemon.textContent.includes(this.innerHTML))
 
 const typesFilter$$ = document.querySelectorAll(".filter");
 for(let type of typesFilter$$) {
