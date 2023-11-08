@@ -110,6 +110,7 @@ const renderPokemon = (mappedData) => {
         card$$.appendChild(h2$$);
         h2$$.textContent = mappedData[i].name;
         types$$.appendChild(p1$$);
+
         //Defino el fondo de cada burbuja de tipo, y si hay dos tipos, lo añado tambien
         p1$$.textContent = mappedData[i].type[0];
         p1$$.classList.add(`type-${mappedData[i].type[0]}`);
@@ -155,6 +156,8 @@ const initFuction = async () => {
 
 initFuction();
 
+
+//Funcion para el buscador
 const showSelection = () => {
     let lowerCaseRequest = browser$$.value.toLowerCase();
     let pokemonCards = document.querySelectorAll(".card-title");
@@ -168,3 +171,19 @@ const showSelection = () => {
 
 const browser$$ = document.querySelector(".browser");
 browser$$.addEventListener("input", showSelection)
+
+//Funcion para el filtro IN PROGRESS
+const filterByType = () => {
+    let pokemonCards = document.querySelectorAll(".card-type-row");
+    for (let pokemon of pokemonCards) {
+        pokemon.parentNode.classList.remove("hidden");
+        if (!pokemon.childNodes.includes(this.textContent)) {
+            pokemon.parentNode.classList.add("hidden");
+        }
+    }
+}
+
+const typesFilter$$ = document.querySelectorAll(".filter");
+for(let type of typesFilter$$) {
+    type.addEventListener("click", filterByType);
+}

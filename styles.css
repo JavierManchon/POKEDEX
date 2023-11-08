@@ -15,6 +15,8 @@ body {
 .container {
   padding: 40px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
 }
 h1 {
   text-transform: uppercase;
@@ -47,6 +49,66 @@ h1 {
   justify-content: flex-end;
   align-items: flex-end;
   padding-top: 1rem;
+}
+.card-title {
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 3rem;
+}
+.card-type-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 1rem;
+}
+.card-type {
+  font-weight: lighter;
+  color: white;
+  margin-top: 5px;
+  width: 4rem;
+  padding: 0.25em 0.5em;
+  border-radius: 2em;
+  border: none;
+  text-align: center;
+}
+.card-type::first-letter {
+  text-transform: uppercase;
+}
+#types-area {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+}
+.card-image {
+  height: 180px;
+  position: absolute;
+  margin-left:auto;
+  margin-right:auto;
+  left:0;
+  right:0;
+  top: 2rem;
+}
+.stats-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 1rem;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  width: 14%;
+  font-size: 1rem;
+}
+.stat-name {
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 /*Defino los colores de los tipos para que se aplique segun el primer tipo de cada pokemon*/
 .type-steel {
@@ -103,58 +165,13 @@ h1 {
 .type-flying {
   background-color: rgb(152,168,240);
 }
-.card-title {
-  text-transform: uppercase;
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 0;
-  margin-top: 3rem;
-}
-.card-type-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 3rem;
-  margin-top: 1rem;
-}
-.card-type {
-  font-weight: lighter;
-  color: white;
-  margin-top: 5px;
-  width: 4rem;
-  padding: 0.25em 0.5em;
-  border-radius: 2em;
-  border: none;
-}
-.card-type::first-letter {
-  text-transform: uppercase;
-}
-.card-image {
-  height: 180px;
-  position: absolute;
-  margin-left:auto;
-  margin-right:auto;
-  left:0;
-  right:0;
-  top: 2rem;
-}
-.stats-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+
+#pokedex-area {
   width: 100%;
-  margin-top: 1rem;
-}
-.stat {
   display: flex;
-  flex-direction: column;
-  width: 14%;
-  font-size: 1rem;
+  justify-content: flex-end;
 }
-.stat-name {
-  font-weight: bold;
-  font-size: 0.9rem;
-}
+
 #pokedex {
   padding-inline-start: 0;
   display: grid;
@@ -162,7 +179,9 @@ h1 {
   grid-gap: 20px;
   justify-items: center;
   align-items: center;
+  width: 90%;
 }
+
 .card:hover {
   animation: bounce 0.5s linear;
 }
