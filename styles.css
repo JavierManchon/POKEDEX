@@ -111,6 +111,10 @@ h1 {
   font-size: 0.9rem;
 }
 /*Defino los colores de los tipos para que se aplique segun el primer tipo de cada pokemon*/
+.type-all {
+  background-color: white;
+  color: grey;
+}
 .type-steel {
   background-color: rgb(168,168,192);
 }
@@ -206,7 +210,9 @@ h1 {
   justify-content: center;
   margin: 3rem 0;
 }
-
+.filter {
+  margin-bottom: 1rem;
+}
 .browser {
   height: 3rem;
   width: 30%;

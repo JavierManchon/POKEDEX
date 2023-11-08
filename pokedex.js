@@ -156,7 +156,6 @@ const initFuction = async () => {
 
 initFuction();
 
-
 //Funcion para el buscador
 const showSelection = () => {
     let lowerCaseRequest = browser$$.value.toLowerCase();
@@ -172,13 +171,14 @@ const showSelection = () => {
 const browser$$ = document.querySelector(".browser");
 browser$$.addEventListener("input", showSelection)
 
+/*
 //Funcion para el filtro IN PROGRESS
-const filterByType = () => {
-    let pokemonCards = document.querySelectorAll(".card-type-row");
+function filterByType() {
+    let pokemonCards = document.querySelectorAll("p");
     for (let pokemon of pokemonCards) {
-        pokemon.parentNode.classList.remove("hidden");
-        if (!pokemon.childNodes.includes(this.textContent)) {
-            pokemon.parentNode.classList.add("hidden");
+        pokemon.parentNode.parentNode.classList.remove("hidden");
+        if (!pokemon.textContent.includes(this.textContent)) {
+            pokemon.parentNode.parentNode.classList.add("hidden");
         }
     }
 }
@@ -186,4 +186,4 @@ const filterByType = () => {
 const typesFilter$$ = document.querySelectorAll(".filter");
 for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
-}
+}*/
