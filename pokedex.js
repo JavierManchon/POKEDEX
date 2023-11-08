@@ -171,19 +171,21 @@ const showSelection = () => {
 const browser$$ = document.querySelector(".browser");
 browser$$.addEventListener("input", showSelection)
 
-/*
+
 //Funcion para el filtro IN PROGRESS
 function filterByType() {
     let pokemonCards = document.querySelectorAll("p");
     for (let pokemon of pokemonCards) {
         pokemon.parentNode.parentNode.classList.remove("hidden");
-        if (!pokemon.textContent.includes(this.textContent)) {
+        if (!pokemon.textContent.includes(this.innerHTML)) {
             pokemon.parentNode.parentNode.classList.add("hidden");
         }
     }
 }
+//Imprime solo los pokemon que tienen tipo unico o que el segundo tipo coincide
+//Buscar una forma de si el primero de los dos coincide tambien lo imprima
 
 const typesFilter$$ = document.querySelectorAll(".filter");
 for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
-}*/
+}
