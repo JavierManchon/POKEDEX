@@ -196,6 +196,10 @@ h1 {
   border: none;
 }
 
+.hidden {
+  display: none;
+}
+
 @keyframes bounce {
   20% {
     transform: translateY(-6px);

@@ -154,3 +154,17 @@ const initFuction = async () => {
 }
 
 initFuction();
+
+const showSelection = () => {
+    let lowerCaseRequest = browser$$.value.toLowerCase();
+    let pokemonCards = document.querySelectorAll(".card-title");
+    for (let pokemon of pokemonCards) {
+        pokemon.parentNode.classList.remove("hidden");
+        if (!pokemon.textContent.toLowerCase().includes(lowerCaseRequest)) {
+            pokemon.parentNode.classList.add("hidden");
+        }
+    }
+}
+
+const browser$$ = document.querySelector(".browser");
+browser$$.addEventListener("input", showSelection)
