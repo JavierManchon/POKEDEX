@@ -144,7 +144,6 @@ const renderPokemon = (mappedData) => {
 
 //Funcion que va a ejecutar la pagina
 const initFuction = async () => {
-
     let pokemonData = await getData(apiUrl);
 
     //Reseteador para el control de carga
@@ -187,11 +186,18 @@ function filterByType() {
         }
     }
 }
-//Imprime solo los pokemon que tienen tipo unico o que el segundo tipo coincide
-//Buscar una forma de si el primero de los dos coincide tambien lo imprima
-//(!pokemon.textContent.includes(this.innerHTML))
 
 const typesFilter$$ = document.querySelectorAll(".filter");
 for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
 }
+
+//boton de Home (resetea todo)
+const homeButton = document.querySelector(".home");
+homeButton.addEventListener("click", function() {
+    browser$$.value = null;
+    let card$$ = document.querySelectorAll(".card");
+    for (let item of card$$) {
+        item.classList.remove("hidden");
+    }
+});

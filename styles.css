@@ -201,10 +201,12 @@ h1 {
   100% {transform: rotate(360deg);}
 }
 
-.browser-area {
+.nav-area {
   display: flex;
   justify-content: center;
   margin: 1.5rem 0;
+  width: 100%;
+  align-items: center;
 }
 .filter {
   cursor: pointer;
@@ -213,7 +215,8 @@ h1 {
 }
 .browser {
   height: 3rem;
-  width: 30%;
+  width: 70%;
+  max-width: 10px;
   padding: 0.25em 0.5em;
   border-radius: 2em;
   border: none;
@@ -223,13 +226,62 @@ h1 {
   display: none;
 }
 
-.transRight{
-  transition: .5s, color .10s;
-      -webkit-transition: .5s, color .10s;
-      -moz-transition: .5s, color .10s;
+.home {
+  width: 5rem;
+  margin-right: 2rem;
+  margin-left: 1rem;
+  cursor: pointer;
 }
-.transRight:hover{
-  transform: translatex(20px);
-      -webkit-transform: translatex(20px);
-      -moz-transform: translatex(20px);
+
+@media (min-width: 375px) {
+  .container {
+    padding-top: 7rem;
+  }
+  .browser {
+    min-width: 13rem;
+    margin-right: 3rem;
+  }
+  .nav-area {
+    position: fixed;
+    z-index: 1;
+    justify-content: space-between;
+  }
+  #pokedex {
+    transform: translate(3.5rem);
+  }
+  #types-area {
+    transform: translate(-1rem);
+    line-height: 1em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 30%;
+  }
+  #types-area::-webkit-scrollbar {
+    display: none;
+  }
+  #pokedex-area {
+    width: 70%
+  }
+}
+
+@media (min-width: 576px) {
+  .transRight{
+    transition: .5s, color .10s;
+        -webkit-transition: .5s, color .10s;
+        -moz-transition: .5s, color .10s;
+  }
+  .transRight:hover{
+    transform: translatex(20px);
+        -webkit-transform: translatex(20px);
+        -moz-transform: translatex(20px);
+  }
+}
+@media (min-width: 768px) {
+  
+}
+@media (min-width: 992px) {
+ 
+}
+@media (min-width: 1200px) {
+  
 }
