@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./PRUEBAS DISEÑO TARJETA/styles2.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik&display=swap" />
     <title>POKEDEX</title>
 </head>
 <body>
-    <nav class="nav-area">
-        <img class="home" src="./assets/pngimg.com - pokeball_PNG8.png" alt="pokedex logo">
-        <input type="text" class="browser" placeholder="Choose your Pokemon"/>
-    </nav>
-    <article class="container">
-        <div id="types-area">
+    <header>
+        <nav class="nav-area">
+            <img class="home" src="./assets/pngimg.com - pokeball_PNG8.png" alt="pokeball">
+            <img class="logo" src="./assets/pngimg.com - pokemon_logo_PNG3.png" alt="pokemon logo">
+            <input type="text" class="browser" placeholder="Choose your Pokemon!">
+        </nav>
+    </header>
+    <main class="container">
+        <article id="types-area" class="translate-types-area">
             <span class="card-type type-all filter transRight">all</span>
             <span class="card-type type-steel filter transRight">steel</span>
             <span class="card-type type-water filter transRight">water</span>
@@ -33,13 +36,13 @@
             <span class="card-type type-ground filter transRight">ground</span>
             <span class="card-type type-poison filter transRight">poison</span>
             <span class="card-type type-flying filter transRight">flying</span>
-        </div>
-        <div id="pokedex-area">
+        </article>
+        <article id="pokedex-area">
             <div id="pokedex">
-                <img src="./assets/pngimg.com - pokeball_PNG8.png" class="rotate">
+                <img src="./assets/pngimg.com - pokemon_logo_PNG3.png" class="pulse">
             </div>
-        </div>
-    </article>
-    <script src="pokedex.js" defer></script>
+        </article>
+    </main>
 </body>
+<script src="pokedex.js"></script>
 </html>

@@ -136,9 +136,9 @@ const renderPokemon = (mappedData) => {
             statsContainer$$.appendChild(stat$$);
         }
         card$$.appendChild(statsContainer$$);
-        card$$.classList.add("transUp");
 
         board$$.appendChild(card$$);
+        card$$.classList.add("transUp");
     }
 }
 
@@ -172,7 +172,7 @@ const browser$$ = document.querySelector(".browser");
 browser$$.addEventListener("input", showSelection)
 
 
-//Funcion para el filtro IN PROGRESS
+//Funcion para el filtro
 function filterByType() {
     let typeRows = document.querySelectorAll(".card-type-row");
     for (let pokemon of typeRows) {
@@ -192,9 +192,27 @@ for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
 }
 
-//boton de Home (resetea todo)
+//boton de filtro
 const homeButton = document.querySelector(".home");
+const filterArea = document.querySelector("#types-area")
+let homeButtonStatus = 0;
 homeButton.addEventListener("click", function() {
+    if (homeButtonStatus === 0) {
+        this.classList.add("rotate");
+        filterArea.classList.remove("translate-types-area");
+        board$$.classList.add("pokedex-translation");
+        homeButtonStatus++;
+    } else {
+        filterArea.classList.add("translate-types-area");
+        board$$.classList.remove("pokedex-translation");
+        homeButtonStatus--;
+        this.classList.remove("rotate");
+    }
+});
+
+//boton de pokemon (resetea todo)
+const pokeButton = document.querySelector(".logo");
+pokeButton.addEventListener("click", function() {
     browser$$.value = null;
     let card$$ = document.querySelectorAll(".card");
     for (let item of card$$) {
