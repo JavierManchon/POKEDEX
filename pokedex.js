@@ -28,7 +28,7 @@ const colorType = {
 const statNames = ["HP", "ATK", "DEF", "S.ATK", "S.DEF", "SPD"];
 
 //Defino el numero de pokemon que saco de la api
-const pokeNum = 151;
+const pokeNum = 151 + 1;
 
 //Funcion que mapea la info dentro de cada pokemon
 const mapData = (unmappedData) => {

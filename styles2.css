@@ -283,9 +283,9 @@ header {
       -moz-transition: .5s, color .10s;
 }
 .transRight:hover{
-  transform: translatex(20px);
-      -webkit-transform: translatex(20px);
-      -moz-transform: translatex(20px);
+  transform: translatex(-20px);
+      -webkit-transform: translatex(-20px);
+      -moz-transform: translatex(-20px);
 }
 
 /*Eefcto desplazamiento arriba*/
