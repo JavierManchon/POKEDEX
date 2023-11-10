@@ -1,85 +1,59 @@
 body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    background-color: #e8e8e8;
-    font-family: "Rubik", sans-serif;
-    overflow-x: hidden;
-  }
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #e8e8e8;
+  font-family: "Rubik", sans-serif;
+  overflow: hidden;
+}
 
   /*Defino como va a ser el nav*/
 header {
     width: 100%;
-  }
-  .nav-area {
-    position: fixed;
-    width: 100%;
-    height: 3rem;
-    display: flex;
-    flex-direction: row;
-    background-color: white;
-    z-index: 2;
-    padding: 0.5rem 0;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  .home {
-    cursor: pointer;
-    width: 1rem;
-    margin-right: 1.75rem;
-  }
-  .browser {
-    height: 2rem;
-    width: 200px;
-    padding: 0.25em 0.5em;
-    border-radius: 2em;
-    border-color: lightgray;
-    align-self: center;
-  }
-  .filter-symbol {
-    width: 20px;
-  }
-  .logo {
-    width: 150px;
-    cursor: pointer;
-    margin-left: 1.75rem;
-  }
+}
+.nav-area {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  z-index: 2;
+  padding: 0.5rem 0;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.logo {
+  width: 150px;
+  cursor: pointer;
+  margin-left: 1.75rem;
+}
 
   /* Zona de combate */
-  .container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    position: relative;
-  }
-  .combat-area {
-    width: 900px;
-    height: 500px;
-  }
-  .combat-area-background {
-    width: 900px;
-  }
-  .player-one-pokemon {
-    display: none;
-  }
-  .player-two-pokemon {
-    display: none;
-  }
+.container {
+  max-width: 900px;
+  min-width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.player-one-pokemon {
+  position: absolute;
+  z-index: 1;
+  bottom: -8%; 
+  left: 5%; 
+  width: 300px; 
+}
+.player-two-pokemon {
+  position: absolute;
+  z-index: 1;
+  top: 20%; 
+  right: 9%; 
+  width: 300px; 
+}
+.combat-area-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  /*ZONA DE CONTROLADORES*/
-  .controller-area {
-    background-color: white;
-    border: 1px solid black;
-    width: 900px;
-    height: 200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .player-one-area, .player-two-area {
-    border: 1px solid red;
-    width: 400px;
-  }
