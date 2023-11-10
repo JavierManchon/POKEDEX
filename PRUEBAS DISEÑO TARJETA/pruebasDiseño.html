@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles2.css" />
+    <link rel="stylesheet" href="./styles2.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik&display=swap" />
     <title>POKEDEX</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Pokédex</h1>
-        <div id="types-area">
+    <header>
+        <nav class="nav-area">
+            <img class="logo" src="./assets/pngimg.com - pokemon_logo_PNG3.png" alt="pokemon logo">
+            <div class="filter-pair">
+                <input type="text" class="browser" placeholder="Choose your Pokemon!">
+                <img src="./assets/filter-icon-sign-symbol-design-free-png.webp" class="filter-symbol" alt="simbolo filtro">
+                <img class="home" src="./assets/pngimg.com - pokeball_PNG8.png" alt="pokeball">
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <article id="types-area" class="translate-types-area">
             <span class="card-type type-all filter transRight">all</span>
             <span class="card-type type-steel filter transRight">steel</span>
             <span class="card-type type-water filter transRight">water</span>
@@ -30,47 +39,13 @@
             <span class="card-type type-ground filter transRight">ground</span>
             <span class="card-type type-poison filter transRight">poison</span>
             <span class="card-type type-flying filter transRight">flying</span>
-        </div>
-        <ol id="pokedex">
-            <li class="card">
-                <div class="card-id-container">
-                    <span class="card-id">#001</span>
-                    <img class="card-image" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png" alt="Imagen de bulbasaur">
-                </div>
-                <h2 class="card-title">bulbasaur</h2>
-                <div class="card-type-row">
-                    <p class="card-type">grass</p>
-                    <p class="card-type">poison</p>
-                </div>
-                <div class="stats-area">
-                    <div class="stat">
-                        <span class="stat-name">HP</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">ATK</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">S.ATK</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">DEF</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">S.DEF</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-name">SPD</span>
-                        <span class="stat-value">100</span>
-                    </div>
-                </div>
-            </li>
-        </ol>
-        <img src="./assets/pngimg.com - pokeball_PNG8.png" class="rotate">
-    </div>
+        </article>
+        <article id="pokedex-area">
+            <div id="pokedex">
+                <img src="./assets/pngimg.com - pokemon_logo_PNG3.png" class="pulse">
+            </div>
+        </article>
+    </main>
 </body>
+<script src="./pokedexPruebas.js"></script>
 </html>

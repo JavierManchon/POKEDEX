@@ -84,10 +84,12 @@ header {
   z-index: 2;
   padding: 0.5rem 0;
   justify-content: space-between;
+  align-items: flex-end;
 }
 .home {
-  margin-left: 1.75rem;
   cursor: pointer;
+  width: 1rem;
+  margin-right: 1.75rem;
 }
 .browser {
   height: 2rem;
@@ -96,22 +98,21 @@ header {
   border-radius: 2em;
   border-color: lightgray;
   align-self: center;
-  margin-right: 1.75rem;
+}
+.filter-symbol {
+  width: 20px;
 }
 .container {
   width: 100vw;
   /*Para que se vea debajo del nav el container*/
   padding-top: 4rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 .logo {
-  position: absolute;
   width: 150px;
-  left: 40%;
-  top: 5px;
-  display: none;
   cursor: pointer;
+  margin-left: 1.75rem;
 }
 
 /*Diseño de la barra de tipos*/
@@ -138,7 +139,7 @@ header {
   width: 10%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   position: fixed;
   z-index: 1;
   
@@ -170,7 +171,7 @@ header {
   transition-duration: 1s;
 }
 .pokedex-translation {
-  transform: translate(3rem);
+  transform: translate(-3rem);
   transition-duration: 1s;
 }       
 .card {
@@ -299,8 +300,11 @@ header {
       -moz-transform: translatey(-10px);
 }
 
-@media (min-width: 1000px) {
-  .logo {
-    display: block;
+@media (max-width: 496px) {
+  .browser {
+    display: none;
+  }
+  .nav-area {
+    align-items: center;
   }
 }
