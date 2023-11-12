@@ -217,10 +217,11 @@ homeButton.addEventListener("click", function() {
 });
 
 //boton de pokemon (abre combate)
-const pokeButton = document.querySelector(".logo");
+const pokeButton = document.querySelector(".button-active");
 pokeButton.addEventListener("click", openCombat);
 
 function openCombat() {
+    pokeButton.classList.add("pulse");
     let $$CardsList = document.body.querySelectorAll(".card");
     for (let card of $$CardsList) {
         card.addEventListener("click", addToCombat);
@@ -240,6 +241,7 @@ function addToCombat() {
         let idValue1 = this.getAttribute("data-id");
         pokemon1.id = idValue1;
         pokemon1.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${idValue1}.png`
+        this.classList.add("markerOne");
         contenderActive = 1;
     } else {
         contenderActive = null;
@@ -250,36 +252,41 @@ function addToCombat() {
         pokemon2.spDef = this.children[3].children[4].lastChild.innerHTML;
         pokemon2.spe = this.children[3].children[5].lastChild.innerHTML;
         let nameValue2 = this.getAttribute("data-name");
-        pokemon1.pokeName = nameValue2;
+        pokemon2.pokeName = nameValue2;
         let idValue2 = this.getAttribute("data-id");
         pokemon2.id = idValue2;
         pokemon2.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idValue2}.png`;
-        initCombat();
+        this.classList.add("markerTwo")
+        let $$footer = document.querySelector("footer");
+        $$footer.classList.add("hidden");
+        let $$button = document.querySelector(".button-active");
+        $$button.classList.add("hidden");
+        setTimeout(initCombat, 5000);
     }
 }
 
 //Script para el combate
 let pokemon1 = {
-    pokeName: "Nidoking",
-    id: 34,
-    hp: 81,
-    atk: 102,
-    def: 77,
-    spAtk: 85,
-    spDef: 85,
-    spe: 85,
+    pokeName: null,
+    id: null,
+    hp: null,
+    atk: null,
+    def: null,
+    spAtk: null,
+    spDef: null,
+    spe: null,
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/34.png"
 }
 
 let pokemon2 = {
-    pokeName: "Venusaur",
-    id: 3,
-    hp: 95,
-    atk: 75,
-    def: 110,
-    spAtk: 100,
-    spDef: 80,
-    spe: 30,
+    pokeName: null,
+    id: null,
+    hp: null,
+    atk: null,
+    def: null,
+    spAtk: null,
+    spDef: null,
+    spe: null,
     img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
 }
 
@@ -518,6 +525,8 @@ function playerTwoMove() {
 
 //Mas adelante cogerá como parametros los pokemon, los pintaraá y almacenará las variables
 function initCombat() {
+    let $$typesArea = document.querySelector(".translate-types-area");
+    $$typesArea.classList.add("hidden");
     let $$pokedexArea = document.querySelector(".pokedex-area");
     $$pokedexArea.classList.add("hidden");
     $$pokedexArea.innerHTML = "";
@@ -525,6 +534,8 @@ function initCombat() {
     $$pokeLogo.classList.add("hidden");
     let $$pokeCombat = document.querySelector(".container-combat");
     $$pokeCombat.classList.remove("hidden");
+    let $$filterPair = document.querySelector(".filter-pair");
+    $$filterPair.classList.add("hidden");
 
 
     //Añade los event listeners a player1
@@ -535,11 +546,15 @@ function initCombat() {
     for (let button of $$playerTwoButtons) {
         button.addEventListener("click", playerTwoMove);
     }
-    //Añade los hp de cada pokemon
+    //Añade los hp y las imagenes de cada pokemon
     currentOneHp = pokemon1.hp;
     $$playerOneHp.innerHTML = currentOneHp;
     currentTwoHp = pokemon2.hp;
     $$playerTwoHp.innerHTML = currentTwoHp;
+    currentOneSpeed = pokemon1.spe;
+    console.log(currentOneSpeed);
+    currentTwoSpeed = pokemon2.spe;
+    console.log(currentTwoSpeed);
     let $$playerOneimage = document.querySelector(".player-one-pokemon");
     $$playerOneimage.setAttribute("src", pokemon1.img);
     let $$playerTwoimage = document.querySelector(".player-two-pokemon");

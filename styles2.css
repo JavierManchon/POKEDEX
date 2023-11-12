@@ -114,6 +114,11 @@ header {
   cursor: pointer;
   margin-left: 1.75rem;
 }
+.loading {
+  margin: 0 auto;
+  margin-top: 200px;
+  width: 300px;
+}
 
 /*Diseño de la barra de tipos*/
 #types-area {
@@ -245,6 +250,31 @@ header {
   font-size: 0.7rem;
 }
 
+/*Parte para barra inferior que activa el combate*/
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 3;
+  position: fixed;
+  top: 95%
+}
+.combat-active-bar {
+  background-color: white;
+  width: 350px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+.button-active {
+  width: 70px;
+  z-index: 4;
+  position: fixed;
+  top: 90%;
+  cursor: pointer;
+}
+
 /*Para rotar los elementos*/
 .rotate {
   animation-name: rotate;
@@ -261,8 +291,6 @@ header {
   animation-name: pulse;
   animation-duration: 1s;
   animation-iteration-count: infinite;
-  margin-top: 300px;
-  width: 150px;
 }
 
 @keyframes pulse {
@@ -417,4 +445,12 @@ header {
 /*Para ocurtar elementos*/
 .hidden {
   display: none;
+}
+
+/*Marcadores de seleccion*/
+.markerOne {
+  border: 4px solid orangered;
+}
+.markerTwo {
+  border: 4px solid cornflowerblue;
 }
