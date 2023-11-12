@@ -284,4 +284,3 @@ function initCombat() {
     currentTwoHp = pokemon2.hp;
     $$playerTwoHp.innerHTML = currentTwoHp;
 }
-initCombat();

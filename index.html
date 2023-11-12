@@ -18,7 +18,7 @@
             </div>
         </nav>
     </header>
-    <main class="container">
+    <main class="container-pokedex">
         <article id="types-area" class="translate-types-area">
             <span class="card-type type-all filter transRight">all</span>
             <span class="card-type type-steel filter transRight">steel</span>
@@ -40,11 +40,34 @@
             <span class="card-type type-poison filter transRight">poison</span>
             <span class="card-type type-flying filter transRight">flying</span>
         </article>
-        <article id="pokedex-area">
-            <div id="pokedex">
-                <img src="./assets/pngimg.com - pokemon_logo_PNG3.png" class="pulse">
+        <article id="pokedex-area" class="pokedex-area">
+            <div id="pokedex" class="pokedex">
+                <img class="logo pulse" src="./assets/pngimg.com - pokemon_logo_PNG3.png">
             </div>
         </article>
+        <div class="container-combat hidden">
+            <div class="combat-area">
+                <img src="../assets/Campo_de_batalla_DPPt_2.webp" class="combat-area-background">
+                <span class="player-two-hp">900</span>
+                <span class="player-one-hp">100</span>
+                <img class="player-one-pokemon">
+                <img class="player-two-pokemon">
+            </div>
+            <div class="controller-area">
+                <div id="player-one-area" class="player-area">
+                    <button class="atk1 button1">Attack</button>
+                    <button class="spAtk1 button1">Special Attack</button>
+                    <button class="atk1 button1">Agility</button>
+                    <button class="TR1 button1">Trick Room</button>
+                </div>
+                <div id="player-two-area" class="player-area">
+                    <button class="atk2 button2 hidden">Attack</button>
+                    <button class="spAtk2 button2 hidden">Special Attack</button>
+                    <button class="agility2 button2 hidden">Agility</button>
+                    <button class="TR2 button2 hidden">Trick Room</button>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 <script src="pokedex.js"></script>
