@@ -40,16 +40,32 @@ header {
 .player-one-pokemon {
   position: absolute;
   z-index: 1;
-  bottom: -8%; 
+  bottom: 22%; 
   left: 5%; 
   width: 300px; 
+}
+.player-one-hp {
+  position: absolute;
+  z-index: 2;
+  top: 14%;  
+  left: 5%; 
+  width: 300px; 
+  font-size: 50px;
 }
 .player-two-pokemon {
   position: absolute;
   z-index: 1;
-  top: 20%; 
+  top: 14%; 
   right: 9%; 
   width: 300px; 
+}
+.player-two-hp {
+  position: absolute;
+  z-index: 2;
+  bottom: 35%; 
+  right: -5%; 
+  width: 300px; 
+  font-size: 50px;
 }
 .combat-area-background {
   width: 100%;
@@ -57,3 +73,71 @@ header {
   object-fit: cover;
 }
 
+/*AREA DE SELECTORES DE BATALLA*/
+.controller-area {
+  height: 200px;
+  color: gray;
+  border: 4px solid black;
+  display: flex;
+  flex-direction: row;
+}
+#player-one-area, #player-two-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 445px;
+}
+.atk1, .spAtk1, .agility1, .TR1 {
+  width: 10rem;
+  height: 3rem;
+  color: grey;
+  border: 2px solid orangered;
+  border-radius: 7px;
+  padding: 5px 36px;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 orangered;
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+}
+.atk1:hover, .spAtk1:hover, .agility1:hover, .TR1:hover {
+  box-shadow: inset 400px 50px 0 0 orangered;
+  color: white;
+}
+
+.atk2, .spAtk2, .agility2, .TR2 {
+  width: 10rem;
+  height: 3rem;
+  color: grey;
+  border: 2px solid cornflowerblue;
+  border-radius: 7px;
+  padding: 5px 36px;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 cornflowerblue;
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+}
+.atk2:hover, .spAtk2:hover, .agility2:hover, .TR2:hover {
+  box-shadow: inset 400px 50px 0 0 cornflowerblue;
+  color: white;
+}
+
+.text-log {
+  width: 100%;
+  transform: translateX(-20%);
+}
+
+
+/*Para control de que aparece en la plantalla*/
+.hidden {
+  display: none
+}

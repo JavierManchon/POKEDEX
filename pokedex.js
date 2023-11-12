@@ -1,6 +1,8 @@
 //Defino los recursos con los que empiezo
 const board$$ = document.querySelector("#pokedex");
 const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
+let screenStatus = 1;
+let contenderActive = null;
 
 //Colores y tipos para los background
 const colorType = {
@@ -139,6 +141,10 @@ const renderPokemon = (mappedData) => {
 
         board$$.appendChild(card$$);
         card$$.classList.add("transUp");
+
+        card$$.setAttribute("data-name", `${mappedData[i].name}`);
+        card$$.setAttribute("data-id", `${mappedData[i].id}`);
+
     }
 }
 
@@ -210,12 +216,47 @@ homeButton.addEventListener("click", function() {
     }
 });
 
-//boton de pokemon (resetea todo)
+//boton de pokemon (abre combate)
 const pokeButton = document.querySelector(".logo");
-pokeButton.addEventListener("click", function() {
-    browser$$.value = null;
-    let card$$ = document.querySelectorAll(".card");
-    for (let item of card$$) {
-        item.classList.remove("hidden");
+pokeButton.addEventListener("click", openCombat);
+
+function openCombat() {
+    let $$CardsList = document.body.querySelectorAll(".card");
+    for (let card of $$CardsList) {
+        card.addEventListener("click", addToCombat);
     }
-});
+}
+
+function addToCombat() {
+    if (contender1 === null) {
+        pokemon1.hp = this.children[3].children[0].lastChild.innerHTML;
+        pokemon1.atk = this.children[3].children[1].lastChild.innerHTML;
+        pokemon1.def = this.children[3].children[2].lastChild.innerHTML;
+        pokemon1.spAtk = this.children[3].children[3].lastChild.innerHTML;
+        pokemon1.spDef = this.children[3].children[4].lastChild.innerHTML;
+        pokemon1.spe = this.children[3].children[5].lastChild.innerHTML;
+        let nameValue = this.getAttribute("data-name");
+        pokemon1.pokeName = nameValue;
+        let idValue = this.getAttribute("data-id");
+        pokemon1.id = idValue;
+        pokemon1.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${idValue}.png`
+        contenderActive = 1;
+    } else {
+        contenderActive = null;
+        pokemon2.hp = this.children[3].children[0].lastChild.innerHTML;
+        pokemon2.atk = this.children[3].children[1].lastChild.innerHTML;
+        pokemon2.def = this.children[3].children[2].lastChild.innerHTML;
+        pokemon2.spAtk = this.children[3].children[3].lastChild.innerHTML;
+        pokemon2.spDef = this.children[3].children[4].lastChild.innerHTML;
+        pokemon2.spe = this.children[3].children[5].lastChild.innerHTML;
+        let nameValue = this.getAttribute("data-name");
+        pokemon1.pokeName = nameValue;
+        let idValue = this.getAttribute("data-id");
+        pokemon2.id = idValue;
+        pokemon2.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${idValue}.png`;
+    }
+}
+
+
+
+
