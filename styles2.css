@@ -482,6 +482,22 @@ footer {
   transition: width 0.3s ease;
 }
 
+/*Para los nombres de los pokes en batalla*/
+.poke-name1, .poke-name2 {
+  z-index: 8;
+  position: absolute;
+  font-weight: bold;
+  text-align: left;
+}
+.poke-name2 {
+  top: 29%;  
+  left: 11.5%; 
+}
+.poke-name1 {
+  bottom: 36.7%; 
+  right: 20.5%; 
+}
+
 /*Para ocurtar elementos*/
 .hidden {
   display: none;

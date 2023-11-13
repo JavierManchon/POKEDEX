@@ -1,4 +1,4 @@
-//Defino los recursos con los que empiezo
+//Defino los recursos con los que empiezo y almaceno algunos generales utiles
 const board$$ = document.querySelector("#pokedex");
 const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
 let screenStatus = 1;
@@ -199,7 +199,7 @@ for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
 }
 
-//boton de filtro
+//Boton de filtro
 const homeButton = document.querySelector(".home");
 const filterArea = document.querySelector("#types-area");
 const filterButton = document.querySelector(".filter-symbol");
@@ -231,7 +231,7 @@ filterButton.addEventListener("click", function() {
     }
 });
 
-//boton de pokemon (abre combate)
+//boton de Pokeball, cuando clico inicio la secuencia de combate
 const pokeButton = document.querySelector(".button-active");
 pokeButton.addEventListener("click", openCombat);
 
@@ -247,6 +247,33 @@ function openCombat() {
     $$footerBar.innerHTML = "Player 1, choose your Pokemon";
 }
 
+//SCRIPT PARA EL COMBATE
+//Construimos los objetos que almacenan la info de los pokes seleccionados
+let pokemon1 = {
+    pokeName: null,
+    id: null,
+    hp: null,
+    atk: null,
+    def: null,
+    spAtk: null,
+    spDef: null,
+    spe: null,
+    img: null
+}
+
+let pokemon2 = {
+    pokeName: null,
+    id: null,
+    hp: null,
+    atk: null,
+    def: null,
+    spAtk: null,
+    spDef: null,
+    spe: null,
+    img: null
+}
+
+//Esta funcion recoge la info de los pokemon seleccionados y los pasa las variables del combate
 function addToCombat() {
     if (contenderActive === null) {
         pokemon1.hp = this.children[3].children[0].lastChild.innerHTML;
@@ -285,31 +312,8 @@ function addToCombat() {
     }
 }
 
-//Script para el combate
-let pokemon1 = {
-    pokeName: null,
-    id: null,
-    hp: null,
-    atk: null,
-    def: null,
-    spAtk: null,
-    spDef: null,
-    spe: null,
-    img: null
-}
 
-let pokemon2 = {
-    pokeName: null,
-    id: null,
-    hp: null,
-    atk: null,
-    def: null,
-    spAtk: null,
-    spDef: null,
-    spe: null,
-    img: null
-}
-
+//Seleccionamos las variables que van a operar en el flujo de combate
 let $$playerOneButtons = document.body.querySelectorAll(".button1");
 let $$playerTwoButtons = document.body.querySelectorAll(".button2");
 let $$playerOneArea = document.body.querySelector("#player-one-area");
@@ -336,12 +340,19 @@ function hideOneOpenTwo() {
     }
 }
 
+//Funcion que una vez terminado el flujo del turno
+//se abre la ventana que permite al jugador uno elegir sus movimientos
 function openOne() {
     for (let button of $$playerOneButtons) {
         button.classList.remove("hidden");
     }
 }
 
+
+//Funcion que recoge la info del ataque del jugador 1
+//Define si está atacando especial o fisico, y lo compara con la defensa especial o fisica del contrincante
+//Si tiene mas defensa que ataque el ataque se reduce al 20% del valor de ataque
+//En caso contrario hace un 50% del daño del valor de ataque.
 function oneAttack() {
     if (currentOneAttack !== null) {
         if (currentOneAttack <= pokemon2.def) {
@@ -360,6 +371,8 @@ function oneAttack() {
     };
 }
 
+
+//Funcion que recoge la info del ataque del jugador 2
 function twoAttack() {
     if (currentTwoAttack !== null) {
         if (currentTwoAttack <= pokemon1.def) {
@@ -379,6 +392,7 @@ function twoAttack() {
 }
 
 //Funcion que inicia flujo de combate
+//Se activa una vez los dos jugadores han seleccionado un movimiento
 function initTextLog() {
     for (let button of $$playerTwoButtons) {
         button.classList.add("hidden");
@@ -386,6 +400,8 @@ function initTextLog() {
     $$playerOneArea.classList.add("hidden");
     $$playerTwoArea.classList.add("hidden");
 
+    //Primero comprueba si Trick Room esta activo,
+    //Si lo esta, invierte las velocidades
     if (trickRoomStatus === true && pokemon1.spe <= pokemon2.spe) {
         console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!")
         oneAttack();
@@ -394,10 +410,11 @@ function initTextLog() {
             console.log(`${pokemon1.pokeName} ataca primero`);
         }, 1000);
         setTimeout(function() {
+            //Aplicamos la actualizacion de las barra de vida
             $$playerTwoHp.innerHTML = currentTwoHp;
             let hpBar2 = document.querySelector(".poke2");
 
-            // Definimos las variables y las condiciones que pasamos a la fucnino que actualiza la vida
+            // Definimos las variables y las condiciones que pasamos a la funcion que actualiza la vida
             let currentHp2 = currentTwoHp;
             let maxHp2 = pokemon2.hp;
 
@@ -615,12 +632,17 @@ function initCombat() {
     for (let button of $$playerTwoButtons) {
         button.addEventListener("click", playerTwoMove);
     }
-    //Añade los hp y las imagenes de cada pokemon
+    //Añade los hp, las imagenes y el nomobre de cada pokemon
     currentOneHp = pokemon1.hp;
     $$playerOneHp.innerHTML = currentOneHp;
     currentTwoHp = pokemon2.hp;
     $$playerTwoHp.innerHTML = currentTwoHp;
     let $$playerOneimage = document.querySelector(".player-one-pokemon");
+    $$playerOneimage.setAttribute("src", pokemon1.img);
+    let $$playerTwoName = document.querySelector(".poke-name2");
+    $$playerTwoName.innerHTML = pokemon2.pokeName;
+    let $$playerOneName = document.querySelector(".poke-name1");
+    $$playerOneName.innerHTML = pokemon1.pokeName;
     $$playerOneimage.setAttribute("src", pokemon1.img);
     let $$playerTwoimage = document.querySelector(".player-two-pokemon");
     $$playerTwoimage.setAttribute("src", pokemon2.img);
@@ -628,13 +650,16 @@ function initCombat() {
 
 //funcion que actualiza la barra de vida
 function hpBarUpdate(hpBar, currentHp, maxHp) {
-    // Calcular el porcentaje de vida actual en relación con la vida máxima
+    // Calcula el porcentaje de vida actual en relación con la vida máxima
     let percentageHp = (currentHp / maxHp) * 100;
 
-    // Actualizar la barra de vida
+    // Actualiza la barra de vida, y le da un porcentaje para el width
     hpBar.style.width = percentageHp + "%";
+    if (percentageHp <= 0) {
+        hpBar.style.width = 0;
+    }
 
-    // Establecer el color de fondo según el porcentaje de vida
+    // Establece el color de fondo según el porcentaje de vida, segun su ancho
     if (percentageHp > 50) {
         hpBar.style.backgroundColor = "green";
     } else if (percentageHp > 20) {
