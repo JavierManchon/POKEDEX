@@ -286,7 +286,7 @@ function addToCombat() {
         pokemon1.pokeName = nameValue1.toUpperCase();
         let idValue1 = this.getAttribute("data-id");
         pokemon1.id = idValue1;
-        pokemon1.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${idValue1}.png`
+        pokemon1.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/${idValue1}.gif`;
         this.classList.add("markerOne");
         $$footerBar.innerHTML = "Player 2, choose your Pokemon";
         contenderActive = 1;
@@ -302,7 +302,7 @@ function addToCombat() {
         pokemon2.pokeName = nameValue2.toUpperCase();
         let idValue2 = this.getAttribute("data-id");
         pokemon2.id = idValue2;
-        pokemon2.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idValue2}.png`;
+        pokemon2.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${idValue2}.gif`;
         this.classList.add("markerTwo")
         let $$footer = document.querySelector("footer");
         $$footer.classList.add("hidden");

@@ -343,14 +343,14 @@ footer {
 .player-one-pokemon {
   position: absolute;
   z-index: 1;
-  bottom: 22%; 
+  bottom: 30%; 
   left: 5%; 
   width: 300px; 
 }
 .player-one-hp {
   position: absolute;
   z-index: 2;
-  top: 25%;  
+  top: 15%;  
   left: 5%; 
   width: 300px;
   border-radius: 10px;
@@ -358,7 +358,7 @@ footer {
 .player-two-pokemon {
   position: absolute;
   z-index: 1;
-  top: 14%; 
+  top: 10%; 
   right: 9%; 
   width: 300px; 
 }
@@ -466,7 +466,7 @@ footer {
 }
 .hp-container1 {
   z-index: 7;
-  top: 25.5%;  
+  top: 15.5%;  
   left: 15.5%; 
 }
 .hp-container2 {
@@ -490,7 +490,7 @@ footer {
   text-align: left;
 }
 .poke-name2 {
-  top: 29%;  
+  top: 19.5%;  
   left: 11.5%; 
 }
 .poke-name1 {
