@@ -48,12 +48,19 @@
         <div class="container-combat hidden">
             <div class="combat-area">
                 <img src="../assets/Campo_de_batalla_DPPt_2.webp" class="combat-area-background">
-                <span class="player-two-hp">900</span>
-                <span class="player-one-hp">100</span>
+                <div class="hp-container1">
+                    <div id="barraVidaPoke2" class="health poke2"></div>
+                </div>
+                <img src="./assets/hp-bar.png" alt="barra de vida" class="player-two-hp">
+                <div class="hp-container2">
+                    <div id="barraVidaPoke1" class="health poke1"></div>
+                </div>
+                <img src="./assets/hp-bar.png" alt="barra de vida" class="player-one-hp">
                 <img class="player-one-pokemon">
                 <img class="player-two-pokemon">
             </div>
             <div class="controller-area">
+                <span class="text-logger hidden"></span>
                 <div id="player-one-area" class="player-area">
                     <button class="atk1 button1">Attack</button>
                     <button class="spAtk1 button1">Special Attack</button>
@@ -72,6 +79,8 @@
     <footer>
         <div class="combat-active-bar">
             <img src="./assets/pngimg.com - pokeball_PNG8.png" class="button-active">
+            <img src="./assets/gif-fuego.webp" class="button-active fire hidden">
+            <span class="combat-text">CHALLENGE YOUR FRIENDS!</span>
         </div>
     </footer>
 </body>

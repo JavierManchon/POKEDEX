@@ -3,6 +3,7 @@ const board$$ = document.querySelector("#pokedex");
 const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
 let screenStatus = 1;
 let contenderActive = null;
+let $$footerBar = document.querySelector(".combat-text");
 
 //Colores y tipos para los background
 const colorType = {
@@ -200,7 +201,8 @@ for(let type of typesFilter$$) {
 
 //boton de filtro
 const homeButton = document.querySelector(".home");
-const filterArea = document.querySelector("#types-area")
+const filterArea = document.querySelector("#types-area");
+const filterButton = document.querySelector(".filter-symbol");
 let homeButtonStatus = 0;
 homeButton.addEventListener("click", function() {
     if (homeButtonStatus === 0) {
@@ -215,6 +217,19 @@ homeButton.addEventListener("click", function() {
         this.classList.remove("rotate");
     }
 });
+filterButton.addEventListener("click", function() {
+    if (homeButtonStatus === 0) {
+        homeButton.classList.add("rotate");
+        filterArea.classList.remove("translate-types-area");
+        board$$.classList.add("pokedex-translation");
+        homeButtonStatus++;
+    } else {
+        filterArea.classList.add("translate-types-area");
+        board$$.classList.remove("pokedex-translation");
+        homeButtonStatus--;
+        homeButton.classList.remove("rotate");
+    }
+});
 
 //boton de pokemon (abre combate)
 const pokeButton = document.querySelector(".button-active");
@@ -222,10 +237,14 @@ pokeButton.addEventListener("click", openCombat);
 
 function openCombat() {
     pokeButton.classList.add("pulse");
+    let $$fire = document.querySelector(".fire");
+    $$fire.classList.remove("hidden");
     let $$CardsList = document.body.querySelectorAll(".card");
     for (let card of $$CardsList) {
         card.addEventListener("click", addToCombat);
+        card.classList.add("pointer");
     }
+    $$footerBar.innerHTML = "Player 1, choose your Pokemon";
 }
 
 function addToCombat() {
@@ -237,11 +256,12 @@ function addToCombat() {
         pokemon1.spDef = this.children[3].children[4].lastChild.innerHTML;
         pokemon1.spe = this.children[3].children[5].lastChild.innerHTML;
         let nameValue1 = this.getAttribute("data-name");
-        pokemon1.pokeName = nameValue1;
+        pokemon1.pokeName = nameValue1.toUpperCase();
         let idValue1 = this.getAttribute("data-id");
         pokemon1.id = idValue1;
         pokemon1.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${idValue1}.png`
         this.classList.add("markerOne");
+        $$footerBar.innerHTML = "Player 2, choose your Pokemon";
         contenderActive = 1;
     } else {
         contenderActive = null;
@@ -252,7 +272,7 @@ function addToCombat() {
         pokemon2.spDef = this.children[3].children[4].lastChild.innerHTML;
         pokemon2.spe = this.children[3].children[5].lastChild.innerHTML;
         let nameValue2 = this.getAttribute("data-name");
-        pokemon2.pokeName = nameValue2;
+        pokemon2.pokeName = nameValue2.toUpperCase();
         let idValue2 = this.getAttribute("data-id");
         pokemon2.id = idValue2;
         pokemon2.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${idValue2}.png`;
@@ -275,7 +295,7 @@ let pokemon1 = {
     spAtk: null,
     spDef: null,
     spe: null,
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/34.png"
+    img: null
 }
 
 let pokemon2 = {
@@ -287,7 +307,7 @@ let pokemon2 = {
     spAtk: null,
     spDef: null,
     spe: null,
-    img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
+    img: null
 }
 
 let $$playerOneButtons = document.body.querySelectorAll(".button1");
@@ -299,11 +319,9 @@ let $$playerTwoHp = document.body.querySelector(".player-two-hp");
 let $$textLog = document.body.querySelector(".text-log");
 let currentOneAttack = null;
 let currentOneSpAttack = null;
-let currentOneSpeed = null;
 let currentOneHp = null;
 let currentTwoAttack = null;
 let currentTwoSpAttack = null;
-let currentTwoSpeed = null;
 let currentTwoHp = null;
 let trickRoomStatus = false;
 
@@ -339,7 +357,7 @@ function oneAttack() {
             currentTwoHp = Math.floor((currentTwoHp - (currentOneSpAttack * 0.5)));
         }
         currentOneSpAttack = null;
-    }
+    };
 }
 
 function twoAttack() {
@@ -368,108 +386,163 @@ function initTextLog() {
     $$playerOneArea.classList.add("hidden");
     $$playerTwoArea.classList.add("hidden");
 
-    if (trickRoomStatus === false) {
-        console.log("¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!")
-        if (currentOneSpeed >= currentTwoSpeed) {
-            oneAttack();
-            twoAttack();
-            setTimeout(function() {
-                console.log("Pokemon 1 ataca primero");
-            }, 1000);
-            setTimeout(function() {
-                $$playerTwoHp.innerHTML = currentTwoHp;
-                if (currentTwoHp <= 0) {
-                    alert("El jugador 1 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 2 son ${currentTwoHp}`);
-            }, 2000);
-            setTimeout(function() {
-                console.log("Pokemon 2 ataca segundo");
-            }, 3000);
-            setTimeout(function() {
-                $$playerOneHp.innerHTML = currentOneHp;
-                if (currentOneHp <= 0) {
-                    alert("El jugador 2 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 1 son ${currentOneHp}`);
-            }, 4000);
-            setTimeout(openOne, 5001);
-        } else {
-            twoAttack();
-            oneAttack();
-            setTimeout(function() {
-                console.log("Pokemon 2 ataca primero");
-            }, 1000);
-            setTimeout(function() {
-                $$playerOneHp.innerHTML = currentOneHp;
-                if (currentOneHp <= 0) {
-                    alert("El jugador 2 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 1 son ${currentOneHp}`);
-            }, 2000);
-            setTimeout(function() {
-                console.log("Pokemon 1 ataca segundo");
-            }, 3000);
-            setTimeout(function() {
-                $$playerTwoHp.innerHTML = currentTwoHp;
-                if (currentTwoHp <= 0) {
-                    alert("El jugador 1 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 2 son ${currentTwoHp}`);
-            }, 4000);
-            setTimeout(openOne, 5001);
-        }
-    } else {
+    if (trickRoomStatus === true && pokemon1.spe <= pokemon2.spe) {
         console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!")
-        if (currentOneSpeed >= currentTwoSpeed) {
-            twoAttack();
-            oneAttack();
-            setTimeout(function() {
-                console.log("Pokemon 2 ataca primero");
-            }, 1000);
-            setTimeout(function() {
-                $$playerOneHp.innerHTML = currentOneHp;
-                if (currentOneHp <= 0) {
-                    alert("El jugador 2 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 1 son ${currentOneHp}`);
-            }, 2000);
-            setTimeout(function() {
-                console.log("Pokemon 1 ataca segundo");
-            }, 3000);
-            setTimeout(function() {
-                $$playerTwoHp.innerHTML = currentTwoHp;
-                if (currentTwoHp <= 0) {
-                    alert("El jugador 1 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 2 son ${currentTwoHp}`);
-            }, 4000);
-            setTimeout(openOne, 5001);
-        } else {
-            oneAttack();
-            twoAttack();
-            setTimeout(function() {
-                console.log("Pokemon 1 ataca primero");
-            }, 1000);
-            setTimeout(function() {
-                $$playerTwoHp.innerHTML = currentTwoHp;
-                if (currentTwoHp <= 0) {
-                    alert("El jugador 1 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 2 son ${currentTwoHp}`);
-            }, 2000);
-            setTimeout(function() {
-                console.log("Pokemon 2 ataca segundo");
-            }, 3000);
-            setTimeout(function() {
-                $$playerOneHp.innerHTML = currentOneHp;
-                if (currentOneHp <= 0) {
-                    alert("El jugador 2 ha ganado el combate");
-                }
-                console.log(`Los HP de pokemon 1 son ${currentOneHp}`);
-            }, 4000);
-            setTimeout(openOne, 5001);
-        }
+        oneAttack();
+        twoAttack();
+        setTimeout(function() {
+            console.log(`${pokemon1.pokeName} ataca primero`);
+        }, 1000);
+        setTimeout(function() {
+            $$playerTwoHp.innerHTML = currentTwoHp;
+            let hpBar2 = document.querySelector(".poke2");
+
+            // Definimos las variables y las condiciones que pasamos a la fucnino que actualiza la vida
+            let currentHp2 = currentTwoHp;
+            let maxHp2 = pokemon2.hp;
+
+            hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            if (currentTwoHp <= 0) {
+                alert("El jugador 1 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+        }, 2000);
+        setTimeout(function() {
+            console.log(`${pokemon2.pokeName} ataca segundo`);
+        }, 3000);
+        setTimeout(function() {
+            $$playerOneHp.innerHTML = currentOneHp;
+            let hpBar1 = document.querySelector(".poke1");
+
+            let currentHp1 = currentOneHp;
+            let maxHp1 = pokemon1.hp;
+
+            hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            if (currentOneHp <= 0) {
+                alert("El jugador 2 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+        }, 4000);
+        setTimeout(openOne, 5001);
+    } else if (trickRoomStatus === true && pokemon2.spe <= pokemon1.spe) {
+        console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!");
+        twoAttack();
+        oneAttack();
+        setTimeout(function() {
+            console.log(`${pokemon2.pokeName} ataca primero`);
+        }, 1000);
+        setTimeout(function() {
+            $$playerOneHp.innerHTML = currentOneHp;
+            let hpBar1 = document.querySelector(".poke1");
+
+            let currentHp1 = currentOneHp;
+            let maxHp1 = pokemon1.hp;
+
+            hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            if (currentOneHp <= 0) {
+                alert("El jugador 2 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+        }, 2000);
+        setTimeout(function() {
+            console.log(`${pokemon1.pokeName} ataca segundo`);
+        }, 3000);
+        setTimeout(function() {
+            $$playerTwoHp.innerHTML = currentTwoHp;
+            let hpBar2 = document.querySelector(".poke2");
+
+            let currentHp2 = currentTwoHp;
+            let maxHp2 = pokemon2.hp;
+
+            hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            if (currentTwoHp <= 0) {
+                alert("El jugador 1 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+        }, 4000);
+        setTimeout(openOne, 5001);
+    } else if (trickRoomStatus === false && pokemon1.spe <= pokemon2.spe) {
+        console.log("¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!");
+        twoAttack();
+        oneAttack();
+        setTimeout(function() {
+            console.log(`${pokemon2.pokeName} ataca primero`);
+        }, 1000);
+        setTimeout(function() {
+            $$playerOneHp.innerHTML = currentOneHp;
+            let hpBar1 = document.querySelector(".poke1");
+
+            let currentHp1 = currentOneHp;
+            let maxHp1 = pokemon1.hp;
+
+            hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            if (currentOneHp <= 0) {
+                alert("El jugador 2 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+        }, 2000);
+        setTimeout(function() {
+            console.log(`${pokemon1.pokeName} ataca segundo`);
+        }, 3000);
+        setTimeout(function() {
+            $$playerTwoHp.innerHTML = currentTwoHp;
+            let hpBar2 = document.querySelector(".poke2");
+
+            let currentHp2 = currentTwoHp;
+            let maxHp2 = pokemon2.hp;
+
+            hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            if (currentTwoHp <= 0) {
+                alert("El jugador 1 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+        }, 4000);
+        setTimeout(openOne, 5001);
+    } else {
+        console.log("¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!");
+        oneAttack();
+        twoAttack();
+        setTimeout(function() {
+            console.log(`${pokemon1.pokeName} ataca primero`);
+        }, 1000);
+        setTimeout(function() {
+            $$playerTwoHp.innerHTML = currentTwoHp;
+            let hpBar2 = document.querySelector(".poke2");
+
+            let currentHp2 = currentTwoHp;
+            let maxHp2 = pokemon2.hp;
+
+            hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            if (currentTwoHp <= 0) {
+                alert("El jugador 1 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+        }, 2000);
+        setTimeout(function() {
+            console.log(`${pokemon2.pokeName} ataca segundo`);
+        }, 3000);
+        setTimeout(function() {
+            $$playerOneHp.innerHTML = currentOneHp;
+            let hpBar1 = document.querySelector(".poke1");
+
+            let currentHp1 = currentOneHp;
+            let maxHp1 = pokemon1.hp;
+
+            hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            if (currentOneHp <= 0) {
+                alert("El jugador 2 ha ganado el combate");
+            }
+            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+        }, 4000);
+        setTimeout(openOne, 5001);
     }
 }
 
@@ -484,8 +557,7 @@ function playerOneMove() {
         currentOneAttack = null;
         hideOneOpenTwo();
     } else if (this.textContent === "Agility") {
-        currentOneSpeed = pokemon1.spe;
-        currentOneSpeed += 20;
+        pokemon1.spe = parseInt(pokemon1.spe) + 20;
         hideOneOpenTwo();
     } else {
         if (trickRoomStatus === false) {
@@ -509,8 +581,7 @@ function playerTwoMove() {
         currentTwoAttack = null;
         initTextLog();
     } else if (this.textContent === "Agility") {
-        currentTwoSpeed = pokemon2.spe;
-        currentTwoSpeed += 20;
+        pokemon2.spe = parseInt(pokemon2.spe) + 20;
         initTextLog();
     } else {
         if (trickRoomStatus === false) {
@@ -527,15 +598,13 @@ function playerTwoMove() {
 function initCombat() {
     let $$typesArea = document.querySelector(".translate-types-area");
     $$typesArea.classList.add("hidden");
-    let $$pokedexArea = document.querySelector(".pokedex-area");
-    $$pokedexArea.classList.add("hidden");
-    $$pokedexArea.innerHTML = "";
-    let $$pokeLogo = document.querySelector(".logo");
-    $$pokeLogo.classList.add("hidden");
     let $$pokeCombat = document.querySelector(".container-combat");
     $$pokeCombat.classList.remove("hidden");
     let $$filterPair = document.querySelector(".filter-pair");
     $$filterPair.classList.add("hidden");
+    let $$pokedexArea = document.querySelector(".pokedex-area");
+    $$pokedexArea.classList.add("hidden");
+    $$pokedexArea.innerHTML = "";
 
 
     //Añade los event listeners a player1
@@ -551,16 +620,34 @@ function initCombat() {
     $$playerOneHp.innerHTML = currentOneHp;
     currentTwoHp = pokemon2.hp;
     $$playerTwoHp.innerHTML = currentTwoHp;
-    currentOneSpeed = pokemon1.spe;
-    console.log(currentOneSpeed);
-    currentTwoSpeed = pokemon2.spe;
-    console.log(currentTwoSpeed);
     let $$playerOneimage = document.querySelector(".player-one-pokemon");
     $$playerOneimage.setAttribute("src", pokemon1.img);
     let $$playerTwoimage = document.querySelector(".player-two-pokemon");
     $$playerTwoimage.setAttribute("src", pokemon2.img);
 }
 
+//funcion que actualiza la barra de vida
+function hpBarUpdate(hpBar, currentHp, maxHp) {
+    // Calcular el porcentaje de vida actual en relación con la vida máxima
+    let percentageHp = (currentHp / maxHp) * 100;
 
+    // Actualizar la barra de vida
+    hpBar.style.width = percentageHp + "%";
+
+    // Establecer el color de fondo según el porcentaje de vida
+    if (percentageHp > 50) {
+        hpBar.style.backgroundColor = "green";
+    } else if (percentageHp > 20) {
+        hpBar.style.backgroundColor = "orange";
+    } else {
+        hpBar.style.backgroundColor = "red";
+    }
+}
+
+//Recarga la pagina vuelve a la home
+let $$logoButton = document.querySelector(".logo");
+$$logoButton.addEventListener('click', _ => {
+    location.reload();
+})
 
 
