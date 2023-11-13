@@ -343,9 +343,9 @@ footer {
 .player-one-pokemon {
   position: absolute;
   z-index: 1;
-  bottom: 30%; 
-  left: 5%; 
-  width: 300px; 
+  bottom: 43%; 
+  left: 20%; 
+  transform: scale(3.5);
 }
 .player-one-hp {
   position: absolute;
@@ -358,9 +358,9 @@ footer {
 .player-two-pokemon {
   position: absolute;
   z-index: 1;
-  top: 10%; 
-  right: 9%; 
-  width: 300px; 
+  top: 30%; 
+  right: 22%;
+  transform: scale(3);
 }
 .player-two-hp {
   position: absolute;

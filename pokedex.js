@@ -623,6 +623,16 @@ function initCombat() {
     $$pokedexArea.classList.add("hidden");
     $$pokedexArea.innerHTML = "";
 
+    //Empieza a sonar la musica de combate
+    const $$audio = document.createElement("audio");
+    $$audio.innerHTML = `
+        <audio autoplay class="hidden">
+            <source src="./assets/pokemon-battle.mp3" type="audio/mp3">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+    `;
+    const $$combat = document.querySelector(".container-combat");
+    $$combat.appendChild($$audio);
 
     //Añade los event listeners a player1
     for (let button of $$playerOneButtons) {
