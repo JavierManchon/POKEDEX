@@ -19,6 +19,10 @@
         </nav>
     </header>
     <main class="container-pokedex">
+        <audio class="selector-sound hidden">
+            <source src="./assets/seleccionPokemon.mp3" type="audio/mp3">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
         <article id="types-area" class="translate-types-area">
             <span class="card-type type-all filter transRight">all</span>
             <span class="card-type type-steel filter transRight">steel</span>
@@ -46,6 +50,10 @@
             </div>
         </article>
         <div class="container-combat hidden">
+            <audio class="winner-sound hidden">
+                <source src="./assets/winner.mp3" type="audio/mp3">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
             <div class="combat-area">
                 <img src="./assets/Campo_de_batalla_DPPt_2.webp" class="combat-area-background">
                 <div class="hp-container1">
@@ -62,7 +70,7 @@
                 <span class="poke-name2 poke2">Pokemon2</span>
             </div>
             <div class="controller-area">
-                <span class="text-logger hidden"></span>
+                <div class="text-logger hidden"></div>
                 <div id="player-one-area" class="player-area player-one-area">
                     <button class="atk1 button1">Attack</button>
                     <button class="spAtk1 button1">Special Attack</button>

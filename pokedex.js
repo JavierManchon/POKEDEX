@@ -4,6 +4,8 @@ const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
 let screenStatus = 1;
 let contenderActive = null;
 let $$footerBar = document.querySelector(".combat-text");
+const selectorSound = document.querySelector(".selector-sound");
+const winnerSound = document.querySelector(".winner-sound");
 
 //Colores y tipos para los background
 const colorType = {
@@ -276,12 +278,12 @@ let pokemon2 = {
 //Esta funcion recoge la info de los pokemon seleccionados y los pasa las variables del combate
 function addToCombat() {
     if (contenderActive === null) {
-        pokemon1.hp = this.children[3].children[0].lastChild.innerHTML;
-        pokemon1.atk = this.children[3].children[1].lastChild.innerHTML;
-        pokemon1.def = this.children[3].children[2].lastChild.innerHTML;
-        pokemon1.spAtk = this.children[3].children[3].lastChild.innerHTML;
-        pokemon1.spDef = this.children[3].children[4].lastChild.innerHTML;
-        pokemon1.spe = this.children[3].children[5].lastChild.innerHTML;
+        pokemon1.hp = parseInt(this.children[3].children[0].lastChild.innerHTML);
+        pokemon1.atk = parseInt(this.children[3].children[1].lastChild.innerHTML);
+        pokemon1.def = parseInt(this.children[3].children[2].lastChild.innerHTML);
+        pokemon1.spAtk = parseInt(this.children[3].children[3].lastChild.innerHTML);
+        pokemon1.spDef = parseInt(this.children[3].children[4].lastChild.innerHTML);
+        pokemon1.spe = parseInt(this.children[3].children[5].lastChild.innerHTML);
         let nameValue1 = this.getAttribute("data-name");
         pokemon1.pokeName = nameValue1.toUpperCase();
         let idValue1 = this.getAttribute("data-id");
@@ -290,14 +292,15 @@ function addToCombat() {
         this.classList.add("markerOne");
         $$footerBar.innerHTML = "Player 2, choose your Pokemon";
         contenderActive = 1;
+        playSound(selectorSound);
     } else {
         contenderActive = null;
-        pokemon2.hp = this.children[3].children[0].lastChild.innerHTML;
-        pokemon2.atk = this.children[3].children[1].lastChild.innerHTML;
-        pokemon2.def = this.children[3].children[2].lastChild.innerHTML;
-        pokemon2.spAtk = this.children[3].children[3].lastChild.innerHTML;
-        pokemon2.spDef = this.children[3].children[4].lastChild.innerHTML;
-        pokemon2.spe = this.children[3].children[5].lastChild.innerHTML;
+        pokemon2.hp = parseInt(this.children[3].children[0].lastChild.innerHTML);
+        pokemon2.atk = parseInt(this.children[3].children[1].lastChild.innerHTML);
+        pokemon2.def = parseInt(this.children[3].children[2].lastChild.innerHTML);
+        pokemon2.spAtk = parseInt(this.children[3].children[3].lastChild.innerHTML);
+        pokemon2.spDef = parseInt(this.children[3].children[4].lastChild.innerHTML);
+        pokemon2.spe = parseInt(this.children[3].children[5].lastChild.innerHTML);
         let nameValue2 = this.getAttribute("data-name");
         pokemon2.pokeName = nameValue2.toUpperCase();
         let idValue2 = this.getAttribute("data-id");
@@ -308,6 +311,7 @@ function addToCombat() {
         $$footer.classList.add("hidden");
         let $$button = document.querySelector(".button-active");
         $$button.classList.add("hidden");
+        playSound(selectorSound);
         setTimeout(initCombat, 5000);
     }
 }
@@ -320,7 +324,7 @@ let $$playerOneArea = document.body.querySelector("#player-one-area");
 let $$playerTwoArea = document.body.querySelector("#player-two-area");
 let $$playerOneHp = document.body.querySelector(".player-one-hp");
 let $$playerTwoHp = document.body.querySelector(".player-two-hp");
-let $$textLog = document.body.querySelector(".text-log");
+let $$textLog = document.body.querySelector(".text-logger");
 let currentOneAttack = null;
 let currentOneSpAttack = null;
 let currentOneHp = null;
@@ -343,6 +347,7 @@ function hideOneOpenTwo() {
 //Funcion que una vez terminado el flujo del turno
 //se abre la ventana que permite al jugador uno elegir sus movimientos
 function openOne() {
+    $$textLog.classList.add("hidden")
     for (let button of $$playerOneButtons) {
         button.classList.remove("hidden");
     }
@@ -400,6 +405,14 @@ function initTextLog() {
     $$playerOneArea.classList.add("hidden");
     $$playerTwoArea.classList.add("hidden");
 
+    $$textLog.classList.remove("hidden")
+
+    //Control token
+    let winnerToken = false;
+
+    //Localizador de sonido de batalla
+    const battleSound = document.querySelector(".battle-sound");
+
     //Primero comprueba si Trick Room esta activo,
     //Si lo esta, invierte las velocidades
     if (trickRoomStatus === true && pokemon1.spe <= pokemon2.spe) {
@@ -421,7 +434,15 @@ function initTextLog() {
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
             if (currentTwoHp <= 0) {
-                alert("El jugador 1 ha ganado el combate");
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                winnerToken = true;
+                setTimeout(function() {
+                    alert("El jugador 1 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
         }, 2000);
@@ -437,8 +458,15 @@ function initTextLog() {
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
 
-            if (currentOneHp <= 0) {
-                alert("El jugador 2 ha ganado el combate");
+            if (currentOneHp <= 0 && winnerToken === false) {
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                setTimeout(function() {
+                    alert("El jugador 2 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
         }, 4000);
@@ -460,7 +488,15 @@ function initTextLog() {
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
 
             if (currentOneHp <= 0) {
-                alert("El jugador 2 ha ganado el combate");
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                winnerToken = true;
+                setTimeout(function() {
+                    alert("El jugador 2 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
         }, 2000);
@@ -476,8 +512,15 @@ function initTextLog() {
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
-            if (currentTwoHp <= 0) {
-                alert("El jugador 1 ha ganado el combate");
+            if (currentTwoHp <= 0 && winnerToken === false) {
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                setTimeout(function() {
+                    alert("El jugador 1 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
         }, 4000);
@@ -499,7 +542,15 @@ function initTextLog() {
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
 
             if (currentOneHp <= 0) {
-                alert("El jugador 2 ha ganado el combate");
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                winnerToken = true;
+                setTimeout(function() {
+                    alert("El jugador 2 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
         }, 2000);
@@ -515,8 +566,15 @@ function initTextLog() {
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
-            if (currentTwoHp <= 0) {
-                alert("El jugador 1 ha ganado el combate");
+            if (currentTwoHp <= 0 && winnerToken === false) {
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                setTimeout(function() {
+                    alert("El jugador 1 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
         }, 4000);
@@ -538,7 +596,15 @@ function initTextLog() {
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
             if (currentTwoHp <= 0) {
-                alert("El jugador 1 ha ganado el combate");
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                winnerToken = true;
+                setTimeout(function() {
+                    alert("El jugador 1 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
         }, 2000);
@@ -554,13 +620,21 @@ function initTextLog() {
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
 
-            if (currentOneHp <= 0) {
-                alert("El jugador 2 ha ganado el combate");
+            if (currentOneHp <= 0 && winnerToken === false) {
+                pauseSound(battleSound);
+                playSound(winnerSound);
+                setTimeout(function() {
+                    alert("El jugador 2 ha ganado el combate");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                }, 3000);
             }
             console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
         }, 4000);
         setTimeout(openOne, 5001);
     }
+    winnerToken = false;
 }
 
 //Event listener que dependiendo que clickes almacena una info para player 1
@@ -626,8 +700,8 @@ function initCombat() {
     //Empieza a sonar la musica de combate
     const $$audio = document.createElement("audio");
     $$audio.innerHTML = `
-        <audio autoplay class="hidden">
-            <source src="./assets/pokemon-battle.mp3" type="audio/mp3">
+        <audio autoplay loop class="battle-sound hidden">
+            <source src="./assets/pokemon-opening.mp3" type="audio/mp3">
             Tu navegador no soporta el elemento de audio.
         </audio>
     `;
@@ -681,8 +755,16 @@ function hpBarUpdate(hpBar, currentHp, maxHp) {
 
 //Recarga la pagina vuelve a la home
 let $$logoButton = document.querySelector(".logo");
-$$logoButton.addEventListener('click', _ => {
+$$logoButton.addEventListener('click', function() {
     location.reload();
 })
 
+//Añade sonidos on click
+function playSound(sound) {
+    sound.play();
+}
 
+//Elimina sonidos
+function pauseSound(sound) {
+    sound.pause();
+}

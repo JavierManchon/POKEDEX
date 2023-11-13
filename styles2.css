@@ -275,6 +275,11 @@ footer {
   position: fixed;
   top: 87%;
   cursor: pointer;
+  transition-duration: 0.5s;
+}
+.button-active:hover {
+  transform: scale(1.1);
+  transition-duration: 0.5s;
 }
 .fire {
   z-index: 4;
@@ -350,7 +355,7 @@ footer {
 .player-one-hp {
   position: absolute;
   z-index: 2;
-  top: 15%;  
+  top: 20%;  
   left: 5%; 
   width: 300px;
   border-radius: 10px;
@@ -437,9 +442,17 @@ footer {
   color: white;
 }
 
-.text-log {
+.text-logger {
   width: 100%;
-  transform: translateX(-20%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-logger span {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
 }
 
 /*Para añadir punteros*/
@@ -464,12 +477,12 @@ footer {
   align-items: center;
   position: absolute;
 }
-.hp-container1 {
+.hp-container2 {
   z-index: 7;
-  top: 15.5%;  
+  top: 20.5%;  
   left: 15.5%; 
 }
-.hp-container2 {
+.hp-container1 {
   z-index: 7;
   bottom: 40.5%; 
   right: 7.5%; 
@@ -489,11 +502,11 @@ footer {
   font-weight: bold;
   text-align: left;
 }
-.poke-name2 {
-  top: 19.5%;  
+.poke-name1 {
+  top: 24%;  
   left: 11.5%; 
 }
-.poke-name1 {
+.poke-name2 {
   bottom: 36.7%; 
   right: 20.5%; 
 }
