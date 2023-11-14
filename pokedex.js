@@ -6,6 +6,9 @@ let contenderActive = null;
 let $$footerBar = document.querySelector(".combat-text");
 const selectorSound = document.querySelector(".selector-sound");
 const winnerSound = document.querySelector(".winner-sound");
+const p1Area = document.querySelector(".player-one-area");
+const p2Area = document.querySelector(".player-two-area");
+let combatLogText = document.querySelector(".combat-log-text");
 
 //Colores y tipos para los background
 const colorType = {
@@ -339,6 +342,7 @@ function hideOneOpenTwo() {
     for (let button of $$playerTwoButtons) {
         button.classList.remove("hidden");
     }
+    p2Area.classList.remove("hidden");
     for (let button of $$playerOneButtons) {
         button.classList.add("hidden");
     }
@@ -351,6 +355,7 @@ function openOne() {
     for (let button of $$playerOneButtons) {
         button.classList.remove("hidden");
     }
+    p1Area.classList.remove("hidden");
 }
 
 
@@ -402,8 +407,8 @@ function initTextLog() {
     for (let button of $$playerTwoButtons) {
         button.classList.add("hidden");
     };
-    $$playerOneArea.classList.add("hidden");
-    $$playerTwoArea.classList.add("hidden");
+    p1Area.classList.add("hidden");
+    p2Area.classList.add("hidden");
 
     $$textLog.classList.remove("hidden")
 
@@ -420,11 +425,11 @@ function initTextLog() {
     //Primero comprueba si Trick Room esta activo,
     //Si lo esta, invierte las velocidades
     if (trickRoomStatus === true && pokemon1.spe <= pokemon2.spe) {
-        console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!")
+        combatLogText.innerHTML = "¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!";
         oneAttack();
         twoAttack();
         setTimeout(function() {
-            console.log(`${pokemon1.pokeName} ataca primero`);
+            combatLogText.innerHTML = `${pokemon1.pokeName} ataca primero`;
         }, 1000);
         setTimeout(function() {
             //Aplicamos la actualizacion de las barra de vida
@@ -457,12 +462,12 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`;
         }, 2000);
 
         //Continuamos el flujo con el segundo pokemon
         setTimeout(function() {
-            console.log(`${pokemon2.pokeName} ataca segundo`);
+            combatLogText.innerHTML = `${pokemon2.pokeName} ataca segundo`;
         }, 3000);
         setTimeout(function() {
             $$playerOneHp.innerHTML = currentOneHp;
@@ -490,17 +495,17 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon1.pokeName} son ${currentOneHp}`;
         }, 4000);
         
         //Resetea la apertura de los controladores
         setTimeout(openOne, 5001);
     } else if (trickRoomStatus === true && pokemon2.spe <= pokemon1.spe) {
-        console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!");
+        combatLogText.innerHTML = "¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!";
         twoAttack();
         oneAttack();
         setTimeout(function() {
-            console.log(`${pokemon2.pokeName} ataca primero`);
+            combatLogText.innerHTML = `${pokemon2.pokeName} ataca primero`;
         }, 1000);
         setTimeout(function() {
             $$playerOneHp.innerHTML = currentOneHp;
@@ -529,7 +534,7 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon1.pokeName} son ${currentOneHp}`;
         }, 2000);
         setTimeout(function() {
             console.log(`${pokemon1.pokeName} ataca segundo`);
@@ -560,15 +565,15 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`;
         }, 4000);
         setTimeout(openOne, 5001);
     } else if (trickRoomStatus === false && pokemon1.spe <= pokemon2.spe) {
-        console.log("¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!");
+        combatLogText.innerHTML = "¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!";
         twoAttack();
         oneAttack();
         setTimeout(function() {
-            console.log(`${pokemon2.pokeName} ataca primero`);
+            combatLogText.innerHTML = `${pokemon2.pokeName} ataca primero`;
         }, 1000);
         setTimeout(function() {
             $$playerOneHp.innerHTML = currentOneHp;
@@ -597,10 +602,10 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon1.pokeName} son ${currentOneHp}`;
         }, 2000);
         setTimeout(function() {
-            console.log(`${pokemon1.pokeName} ataca segundo`);
+            combatLogText.innerHTML = `${pokemon1.pokeName} ataca segundo`;
         }, 3000);
         setTimeout(function() {
             $$playerTwoHp.innerHTML = currentTwoHp;
@@ -628,15 +633,15 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`;
         }, 4000);
         setTimeout(openOne, 5001);
     } else {
-        console.log("¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!");
+        combatLogText.innerHTML = "¡Parece que los pokemon estan comodos! El pokemon más rápido ataca antes!";
         oneAttack();
         twoAttack();
         setTimeout(function() {
-            console.log(`${pokemon1.pokeName} ataca primero`);
+            combatLogText.innerHTML = `${pokemon1.pokeName} ataca primero`;
         }, 1000);
         setTimeout(function() {
             $$playerTwoHp.innerHTML = currentTwoHp;
@@ -665,10 +670,10 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`;
         }, 2000);
         setTimeout(function() {
-            console.log(`${pokemon2.pokeName} ataca segundo`);
+            combatLogText.innerHTML = `${pokemon2.pokeName} ataca segundo`;
         }, 3000);
         setTimeout(function() {
             $$playerOneHp.innerHTML = currentOneHp;
@@ -696,7 +701,7 @@ function initTextLog() {
                     }, 1000);
                 }, 3000);
             }
-            console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
+            combatLogText.innerHTML = `Los HP de ${pokemon1.pokeName} son ${currentOneHp}`;
         }, 4000);
         setTimeout(openOne, 5001);
     }
