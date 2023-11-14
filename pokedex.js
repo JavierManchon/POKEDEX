@@ -10,7 +10,7 @@ const p1Area = document.querySelector(".player-one-area");
 const p2Area = document.querySelector(".player-two-area");
 let combatLogText = document.querySelector(".combat-log-text");
 
-//Colores y tipos para los background
+//Colores y tipos para los background para usar en las burbujas de tipos, el RGB es por si hiciera falta
 const colorType = {
     steel: [168,168,192],
     water: [56,153,248],
@@ -36,7 +36,7 @@ const colorType = {
 const statNames = ["HP", "ATK", "DEF", "S.ATK", "S.DEF", "SPD"];
 
 //Defino el numero de pokemon que saco de la api
-const pokeNum = 151 + 1;
+const pokeNum = 151;
 
 //Funcion que mapea la info dentro de cada pokemon
 const mapData = (unmappedData) => {
@@ -53,16 +53,18 @@ const mapData = (unmappedData) => {
     return pokemon;
 }
 
-//Definimos la funcion de fetch
+//Funcion de fetch
 const getData = async (url) => {
+    //Control de errores
     try {
         let pokemonData = [];
-        for (let i = 1; i < pokeNum; i++) {
+        for (let i = 1; i < pokeNum + 1; i++) {
             let response = await fetch(url + i);
             let data = await response.json();
             pokemonData.push(data);
         }
 
+        //Pokemon mapeados al pasarle la info del fetch a la funcion map
         let pokemonMapped = mapData(pokemonData);
 
         return pokemonMapped;
@@ -129,7 +131,7 @@ const renderPokemon = (mappedData) => {
         }
         card$$.appendChild(types$$);
 
-        //Incorporo las stats
+        //Incorporo las stats, recorro el array donde tengo los nombres de las stats ubicados y el que tienes los numeros almacenados 
         for (let j = 0; j < 6; j++) {
             let stat$$ = document.createElement("div");
             stat$$.className = "stat";
@@ -155,7 +157,7 @@ const renderPokemon = (mappedData) => {
 }
 
 //Funcion que va a ejecutar la pagina
-const initFuction = async () => {
+const init = async () => {
     let pokemonData = await getData(apiUrl);
 
     //Reseteador para el control de carga
@@ -166,13 +168,14 @@ const initFuction = async () => {
     return renderedPokemon;
 }
 
-initFuction();
+init();
 
 //Funcion para el buscador
 const showSelection = () => {
     let lowerCaseRequest = browser$$.value.toLowerCase();
     let pokemonCards = document.querySelectorAll(".card-title");
     for (let pokemon of pokemonCards) {
+        //elimina cualquier filtro previo la siguiente linea
         pokemon.parentNode.classList.remove("hidden");
         if (!pokemon.textContent.toLowerCase().includes(lowerCaseRequest)) {
             pokemon.parentNode.classList.add("hidden");
@@ -188,6 +191,7 @@ browser$$.addEventListener("input", showSelection)
 function filterByType() {
     let typeRows = document.querySelectorAll(".card-type-row");
     for (let pokemon of typeRows) {
+        //La siguiente linea limpia el filtro para ocultar un nuevo tipo
         pokemon.parentNode.classList.remove("hidden");
         let typeFilter = pokemon.children;
         if ((typeFilter.length === 1 && typeFilter[0].innerHTML !== this.innerHTML) || (typeFilter.length === 2 && (typeFilter[0].innerHTML !== this.innerHTML && typeFilter[1].innerHTML !== this.innerHTML))) {
@@ -204,7 +208,7 @@ for(let type of typesFilter$$) {
     type.addEventListener("click", filterByType);
 }
 
-//Boton de filtro
+//Boton de filtro que inicia las animaciones de despliegue
 const homeButton = document.querySelector(".home");
 const filterArea = document.querySelector("#types-area");
 const filterButton = document.querySelector(".filter-symbol");
@@ -240,6 +244,8 @@ filterButton.addEventListener("click", function() {
 const pokeButton = document.querySelector(".button-active");
 pokeButton.addEventListener("click", openCombat);
 
+
+//Iniciador de transicion a la pantalla de combate que recopila la info de cada jugador
 function openCombat() {
     pokeButton.classList.add("pulse");
     let $$fire = document.querySelector(".fire");
@@ -253,7 +259,7 @@ function openCombat() {
 }
 
 //SCRIPT PARA EL COMBATE
-//Construimos los objetos que almacenan la info de los pokes seleccionados
+//Declaro los objetos que almacenan la info de los pokes seleccionados
 let pokemon1 = {
     pokeName: null,
     id: null,
@@ -295,7 +301,6 @@ function addToCombat() {
         this.classList.add("markerOne");
         $$footerBar.innerHTML = "Player 2, choose your Pokemon";
         contenderActive = 1;
-        playSound(selectorSound);
     } else {
         contenderActive = null;
         pokemon2.hp = parseInt(this.children[3].children[0].lastChild.innerHTML);
@@ -315,6 +320,11 @@ function addToCombat() {
         let $$button = document.querySelector(".button-active");
         $$button.classList.add("hidden");
         playSound(selectorSound);
+        //Uso esta secuencia para cerrar los filtros en caso de se inicie el combate
+        filterArea.classList.add("translate-types-area");
+        board$$.classList.remove("pokedex-translation");
+        homeButtonStatus--;
+        homeButton.classList.remove("rotate");
         setTimeout(initCombat, 5000);
     }
 }
@@ -349,7 +359,7 @@ function hideOneOpenTwo() {
 }
 
 //Funcion que una vez terminado el flujo del turno
-//se abre la ventana que permite al jugador uno elegir sus movimientos
+//se abre la ventana que permite al jugador uno elegir sus movimientos ocultando el log
 function openOne() {
     $$textLog.classList.add("hidden")
     for (let button of $$playerOneButtons) {
@@ -413,6 +423,7 @@ function initTextLog() {
     $$textLog.classList.remove("hidden")
 
     //Control token
+    //Cambia a true cuando hay un ganador, entonces no ejecuta tambien el mensaje de segundo ganador si los dos poke estan debilitados
     let winnerToken = false;
 
     //Localizador de sonido de batalla
@@ -440,6 +451,7 @@ function initTextLog() {
             let currentHp2 = currentTwoHp;
             let maxHp2 = pokemon2.hp;
 
+            //Ejecuto con los parametros definidos la funcion que actualiza la barra de vida
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
             //Animaciones de movimiento para el ataque y parpadeo para el daño
@@ -803,12 +815,13 @@ function initCombat() {
     $$playerTwoimage.setAttribute("src", pokemon2.img);
 }
 
-//funcion que actualiza la barra de vida
+//funcion que actualiza la barra de vida, la uso dentro del initTextLog para que se actualice junto al texto que actualiza el status del combate 
 function hpBarUpdate(hpBar, currentHp, maxHp) {
     // Calcula el porcentaje de vida actual en relación con la vida máxima
     let percentageHp = (currentHp / maxHp) * 100;
 
     // Actualiza la barra de vida, y le da un porcentaje para el width
+    //Necesito un string porque es para estilos en linea
     hpBar.style.width = percentageHp + "%";
     if (percentageHp <= 0) {
         hpBar.style.width = 0;
@@ -839,3 +852,8 @@ function playSound(sound) {
 function pauseSound(sound) {
     sound.pause();
 }
+
+//TODO: Mensajes especificos para los movimientos de Trick Room y Agility
+//TODO: Definir otra animacion para los movimientos que no son de ataque
+//TODO: Ajustar altura del campo de batalla en responsive
+//FIXED: Si inicio combate con el filtro abierto se rompe
