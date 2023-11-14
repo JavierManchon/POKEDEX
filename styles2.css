@@ -347,10 +347,11 @@ footer {
 }
 .player-one-pokemon {
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   bottom: 43%; 
   left: 20%; 
   transform: scale(3.5);
+  transition-duration: 0.5s;
 }
 .player-one-hp {
   position: absolute;
@@ -362,10 +363,11 @@ footer {
 }
 .player-two-pokemon {
   position: absolute;
-  z-index: 1;
+  z-index: 10;
   top: 30%; 
   right: 22%;
   transform: scale(3);
+  transition-duration: 0.5s;
 }
 .player-two-hp {
   position: absolute;
@@ -508,7 +510,18 @@ footer {
 }
 .poke-name2 {
   bottom: 36.7%; 
-  right: 20.5%; 
+  right: 19.5%; 
+}
+
+/*Parpadeo*/
+.blinking {
+  animation: blink-animation 0.5s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
 }
 
 /*Para ocurtar elementos*/

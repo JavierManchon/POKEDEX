@@ -413,6 +413,10 @@ function initTextLog() {
     //Localizador de sonido de batalla
     const battleSound = document.querySelector(".battle-sound");
 
+    //Selectores de pokemon para las animaciones
+    let pokemonOne = document.querySelector(".player-one-pokemon");
+    let pokemonTwo = document.querySelector(".player-two-pokemon");
+
     //Primero comprueba si Trick Room esta activo,
     //Si lo esta, invierte las velocidades
     if (trickRoomStatus === true && pokemon1.spe <= pokemon2.spe) {
@@ -433,6 +437,15 @@ function initTextLog() {
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
+            //Animaciones de movimiento para el ataque y parpadeo para el daño
+            pokemonOne.style.left = "250px";
+            pokemonTwo.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonOne.style.left = "200px";
+                pokemonTwo.classList.toggle("blinking");
+            }, 500);
+
+            //Comprobamos si ha ganado el jugador que ataca primero y cerramos la partida en caso afirmativo
             if (currentTwoHp <= 0) {
                 pauseSound(battleSound);
                 playSound(winnerSound);
@@ -446,6 +459,8 @@ function initTextLog() {
             }
             console.log(`Los HP de ${pokemon2.pokeName} son ${currentTwoHp}`);
         }, 2000);
+
+        //Continuamos el flujo con el segundo pokemon
         setTimeout(function() {
             console.log(`${pokemon2.pokeName} ataca segundo`);
         }, 3000);
@@ -457,6 +472,13 @@ function initTextLog() {
             let maxHp1 = pokemon1.hp;
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            pokemonTwo.style.left = "600px";
+            pokemonOne.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonTwo.style.left = "650px";
+                pokemonOne.classList.toggle("blinking");
+            }, 500);
 
             if (currentOneHp <= 0 && winnerToken === false) {
                 pauseSound(battleSound);
@@ -470,6 +492,8 @@ function initTextLog() {
             }
             console.log(`Los HP de ${pokemon1.pokeName} son ${currentOneHp}`);
         }, 4000);
+        
+        //Resetea la apertura de los controladores
         setTimeout(openOne, 5001);
     } else if (trickRoomStatus === true && pokemon2.spe <= pokemon1.spe) {
         console.log("¡Uy parece que el espacio esta enrarecido! Parece que el pokemon más lento se mueve más rapido!");
@@ -486,6 +510,13 @@ function initTextLog() {
             let maxHp1 = pokemon1.hp;
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            pokemonTwo.style.left = "600px";
+            pokemonOne.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonTwo.style.left = "650px";
+                pokemonOne.classList.toggle("blinking");
+            }, 500);
 
             if (currentOneHp <= 0) {
                 pauseSound(battleSound);
@@ -511,6 +542,13 @@ function initTextLog() {
             let maxHp2 = pokemon2.hp;
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            pokemonOne.style.left = "250px";
+            pokemonTwo.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonOne.style.left = "200px";
+                pokemonTwo.classList.toggle("blinking");
+            }, 500);
 
             if (currentTwoHp <= 0 && winnerToken === false) {
                 pauseSound(battleSound);
@@ -541,6 +579,13 @@ function initTextLog() {
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
 
+            pokemonTwo.style.left = "600px";
+            pokemonOne.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonTwo.style.left = "650px";
+                pokemonOne.classList.toggle("blinking");
+            }, 500);
+
             if (currentOneHp <= 0) {
                 pauseSound(battleSound);
                 playSound(winnerSound);
@@ -565,6 +610,13 @@ function initTextLog() {
             let maxHp2 = pokemon2.hp;
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
+
+            pokemonOne.style.left = "250px";
+            pokemonTwo.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonOne.style.left = "200px";
+                pokemonTwo.classList.toggle("blinking");
+            }, 500);
 
             if (currentTwoHp <= 0 && winnerToken === false) {
                 pauseSound(battleSound);
@@ -595,6 +647,13 @@ function initTextLog() {
 
             hpBarUpdate(hpBar2, currentHp2, maxHp2);
 
+            pokemonOne.style.left = "250px";
+            pokemonTwo.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonOne.style.left = "200px";
+                pokemonTwo.classList.toggle("blinking");
+            }, 500);
+
             if (currentTwoHp <= 0) {
                 pauseSound(battleSound);
                 playSound(winnerSound);
@@ -619,6 +678,13 @@ function initTextLog() {
             let maxHp1 = pokemon1.hp;
 
             hpBarUpdate(hpBar1, currentHp1, maxHp1);
+
+            pokemonTwo.style.left = "600px";
+            pokemonOne.classList.toggle("blinking");
+            setTimeout(function() {
+                pokemonTwo.style.left = "650px";
+                pokemonOne.classList.toggle("blinking");
+            }, 500);
 
             if (currentOneHp <= 0 && winnerToken === false) {
                 pauseSound(battleSound);
